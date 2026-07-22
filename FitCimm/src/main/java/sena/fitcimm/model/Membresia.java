@@ -4,7 +4,6 @@
  */
 package sena.fitcimm.model;
 
-
 import java.time.*;
 
 /**
@@ -24,6 +23,12 @@ public class Membresia {
     private LocalDate FechaFin;
 
     private double ValorPagado;
+
+    public enum estadoMembresia {
+         VIGENTE,
+         POR_VENCER,
+         VENCIDA
+    }
 
     public Membresia() {
     }
@@ -84,5 +89,7 @@ public class Membresia {
     public void setValorPagado(double ValorPagado) {
         this.ValorPagado = ValorPagado;
     }
+    
+    
 
 }
