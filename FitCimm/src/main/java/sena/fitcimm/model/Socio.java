@@ -4,7 +4,7 @@
  */
 package sena.fitcimm.model;
 
-import java.sql.Date;
+import java.time.*;
 
 /**
  *
@@ -18,14 +18,14 @@ public class Socio {
     private String Apellidos;
     private String Telefono;
     private String Correo;
-    private Date FechaNacimiento;
+    private LocalDate FechaNacimiento;
     private boolean Estado;
 
     public Socio() {
 
     }
 
-    public Socio(String Documento, String Nombres, String Apellidos, String Telefono, String Correo, Date FechaNacimiento, boolean Estado) {
+    public Socio(String Documento, String Nombres, String Apellidos, String Telefono, String Correo, LocalDate FechaNacimiento, boolean Estado) {
         this.Documento = Documento;
         this.Nombres = Nombres;
         this.Apellidos = Apellidos;
@@ -83,11 +83,11 @@ public class Socio {
         this.Correo = Correo;
     }
 
-    public Date getFechaNacimiento() {
+    public LocalDate getFechaNacimiento() {
         return FechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date FechaNacimiento) {
+    public void setFechaNacimiento(LocalDate FechaNacimiento) {
         this.FechaNacimiento = FechaNacimiento;
     }
 

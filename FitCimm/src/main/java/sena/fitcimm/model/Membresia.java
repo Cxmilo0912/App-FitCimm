@@ -4,7 +4,8 @@
  */
 package sena.fitcimm.model;
 
-import java.sql.Date;
+
+import java.time.*;
 
 /**
  *
@@ -18,16 +19,16 @@ public class Membresia {
 
     private int IdPlan;
 
-    private Date FechaInicio;
+    private LocalDate FechaInicio;
 
-    private Date FechaFin;
+    private LocalDate FechaFin;
 
     private double ValorPagado;
 
     public Membresia() {
     }
 
-    public Membresia(int Id, int IdSocio, int IdPlan, Date FechaInicio, Date FechaFin, double ValorPagado) {
+    public Membresia(int Id, int IdSocio, int IdPlan, LocalDate FechaInicio, LocalDate FechaFin, double ValorPagado) {
         this.Id = Id;
         this.IdSocio = IdSocio;
         this.IdPlan = IdPlan;
@@ -60,19 +61,19 @@ public class Membresia {
         this.IdPlan = IdPlan;
     }
 
-    public Date getFechaInicio() {
+    public LocalDate getFechaInicio() {
         return FechaInicio;
     }
 
-    public void setFechaInicio(Date FechaInicio) {
+    public void setFechaInicio(LocalDate FechaInicio) {
         this.FechaInicio = FechaInicio;
     }
 
-    public Date getFechaFin() {
+    public LocalDate getFechaFin() {
         return FechaFin;
     }
 
-    public void setFechaFin(Date FechaFin) {
+    public void setFechaFin(LocalDate FechaFin) {
         this.FechaFin = FechaFin;
     }
 
