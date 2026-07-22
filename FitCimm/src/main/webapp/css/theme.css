@@ -1,0 +1,24 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this template
+*/
+/* 
+    Created on : 22/07/2026, 4:32:15 p. m.
+    Author     : julil
+*/
+
+:root {
+    --bg-primary: #f8fafc;
+    --text-primary: #0f172a;
+}
+
+html.dark {
+    --bg-primary: #0b0f19;
+    --text-primary: #f8fafc;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
