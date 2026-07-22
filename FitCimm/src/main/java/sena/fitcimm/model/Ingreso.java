@@ -1,7 +1,6 @@
 package sena.fitcimm.model;
 
-import  java.sql.Date;
-import java.sql.Time;
+import  java.time.*;
 
 
 public class Ingreso {
@@ -10,14 +9,14 @@ public class Ingreso {
 
     private int IdSocio;
 
-    private Date FechaIngreso;
+    private LocalDate FechaIngreso;
 
-    private Time HoraIngreso;
+    private LocalTime HoraIngreso;
 
     public Ingreso() {
     }
 
-    public Ingreso(Date FechaIngreso, Time HoraIngreso, int IdSocio) {
+    public Ingreso(LocalDate FechaIngreso, LocalTime HoraIngreso, int IdSocio) {
         this.FechaIngreso = FechaIngreso;
         this.HoraIngreso = HoraIngreso;
         this.IdSocio = IdSocio;
@@ -39,19 +38,19 @@ public class Ingreso {
         this.IdSocio = IdSocio;
     }
 
-    public Date getFechaIngreso() {
+    public LocalDate getFechaIngreso() {
         return FechaIngreso;
     }
 
-    public void setFechaIngreso(Date FechaIngreso) {
+    public void setFechaIngreso(LocalDate FechaIngreso) {
         this.FechaIngreso = FechaIngreso;
     }
 
-    public Time getHoraIngreso() {
+    public LocalTime getHoraIngreso() {
         return HoraIngreso;
     }
 
-    public void setHoraIngreso(Time HoraIngreso) {
+    public void setHoraIngreso(LocalTime HoraIngreso) {
         this.HoraIngreso = HoraIngreso;
     }
 
