@@ -19,21 +19,25 @@ public class Socio {
     private String Telefono;
     private String Correo;
     private LocalDate FechaNacimiento;
-    private boolean Estado;
+    private Membresia membresia;
+    private boolean Activo;
 
     public Socio() {
 
     }
 
-    public Socio(String Documento, String Nombres, String Apellidos, String Telefono, String Correo, LocalDate FechaNacimiento, boolean Estado) {
+    public Socio(String Documento, String Nombres, String Apellidos, String Telefono, String Correo, LocalDate FechaNacimiento, Membresia membresia, boolean Activo) {
         this.Documento = Documento;
         this.Nombres = Nombres;
         this.Apellidos = Apellidos;
         this.Telefono = Telefono;
         this.Correo = Correo;
         this.FechaNacimiento = FechaNacimiento;
-        this.Estado = Estado;
+        this.membresia = membresia;
+        this.Activo = Activo;
     }
+
+    
 
     public int getId() {
         return Id;
@@ -91,12 +95,20 @@ public class Socio {
         this.FechaNacimiento = FechaNacimiento;
     }
 
-    public boolean isEstado() {
-        return Estado;
+    public boolean isActivo() {
+        return Activo;
     }
 
-    public void setEstado(boolean Estado) {
-        this.Estado = Estado;
+    public void setActivo(boolean Activo) {
+        this.Activo = Activo;
+    }
+
+    public Membresia getMembresia() {
+        return membresia;
+    }
+
+    public void setMembresia(Membresia membresia) {
+        this.membresia = membresia;
     }
     
     
