@@ -24,11 +24,6 @@ public class Membresia {
 
     private double ValorPagado;
 
-    public enum estadoMembresia {
-         VIGENTE,
-         POR_VENCER,
-         VENCIDA
-    }
 
     public Membresia() {
     }
