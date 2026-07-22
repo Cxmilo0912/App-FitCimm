@@ -1,3 +1,14 @@
-sena\fitcimm\model\Membresia.class
+sena\fitcimm\model\EstadoMembresia.class
+sena\fitcimm\service\SocioService.class
+sena\fitcimm\dao\IngresoDAO.class
+sena\fitcimm\dao\SocioDAO.class
+sena\fitcimm\dao\PlanDAO.class
+sena\fitcimm\service\PlanService.class
 sena\fitcimm\model\Socio.class
+sena\fitcimm\dao\MembresiaDAO.class
+sena\fitcimm\model\Membresia.class
+sena\fitcimm\model\Ingreso.class
 sena\fitcimm\model\Plan.class
+sena\fitcimm\service\MembresiaService.class
+sena\fitcimm\util\ConexionDB.class
+sena\fitcimm\service\IngresoService.class
