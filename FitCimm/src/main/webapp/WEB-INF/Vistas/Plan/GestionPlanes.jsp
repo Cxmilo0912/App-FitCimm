@@ -286,11 +286,15 @@
             gap: 8px;
             box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
             transition: all 0.2s;
+            text-decoration: none;
         }
 
         .btn-primary:hover {
             background-color: var(--primary-hover);
             box-shadow: 0 4px 10px rgba(37, 99, 235, 0.35);
+            color: var(--text-while);
+            text-decoration: none;
+            
         }
 
         /* ==========================================================================
@@ -525,10 +529,10 @@
                     <h1>Gestión de Planes</h1>
                     <p>Administra los planes de suscripción ofrecidos a los partners.</p>
                 </div>
-                <button class="btn-primary">
+                <a href="${pageContext.request.contextPath}/PlanController?accion=nuevo" class="btn-primary">
                     <span class="material-symbols-outlined" style="font-size: 20px;">add</span>
                     Agregar Plan
-                </button>
+                </a>
             </div>
 
             <!-- Tarjeta Tabla de Planes -->
