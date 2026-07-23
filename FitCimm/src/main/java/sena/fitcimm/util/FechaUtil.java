@@ -7,13 +7,11 @@ package sena.fitcimm.util;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-/**
- *
- * @author julil
- */
+
 public class FechaUtil {
 
     public static long diasRestantes(LocalDate fin) {
         return ChronoUnit.DAYS.between(LocalDate.now(), fin);
     }
+
 }

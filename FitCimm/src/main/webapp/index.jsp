@@ -87,7 +87,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
 
                     <!-- Card: Gestión de Socios -->
-                    <a href="${pageContext.request.contextPath}/SociosController?accion=listar"
+                    <a href="${pageContext.request.contextPath}/WEB-INF/Vistas/Socio/ListadoSocios.jsp"
                        class="module-card group relative bg-white dark:bg-navy-900 border border-slate-200 dark:border-slate-800 hover:border-sky-500 p-6 rounded-2xl flex flex-col items-start text-left transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-sky-500/10 h-full cursor-pointer">
                         <div class="w-14 h-14 bg-slate-100 dark:bg-slate-800 flex items-center justify-center rounded-xl mb-6 group-hover:bg-sky-500/10 transition-colors duration-300">
                             <span class="material-symbols-outlined text-[32px] text-sky-600 dark:text-sky-400">group</span>
@@ -97,6 +97,7 @@
                             Gestión integral del directorio de socios: cree nuevos registros, modifique perfiles y mantenga la información al día.
                         </p>
                         <div class="flex items-center gap-2 text-xs font-bold text-sky-600 dark:text-sky-400 group-hover:translate-x-1 transition-transform uppercase tracking-wider">
+
                             <span>ACCEDER MÓDULO</span>
                             <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
                         </div>
