@@ -82,19 +82,19 @@ public class SocioDAO {
 
         return null;
     }
+    
 
     public void MtEditarSocio(Socio oSocio) throws SQLException {
-        String consulta = "UPDATE socio SET documento = ?, nombres = ?, apellidos = ?,"
+        String consulta = "UPDATE socio SET nombres = ?, apellidos = ?,"
                 + "telefono = ?, correo = ?, fecha_nacimiento = ? Where id_socio = ?";
 
         try (Connection cn = ConexionDB.getConnection(); PreparedStatement ps = cn.prepareStatement(consulta)) {
-            ps.setString(1, oSocio.getDocumento());
-            ps.setString(2, oSocio.getNombres());
-            ps.setString(3, oSocio.getApellidos());
-            ps.setString(4, oSocio.getTelefono());
-            ps.setString(5, oSocio.getCorreo());
-            ps.setDate(6, Date.valueOf(oSocio.getFechaNacimiento()));
-            ps.setInt(7, oSocio.getId());
+            ps.setString(1, oSocio.getNombres());
+            ps.setString(2, oSocio.getApellidos());
+            ps.setString(3, oSocio.getTelefono());
+            ps.setString(4, oSocio.getCorreo());
+            ps.setDate(5, Date.valueOf(oSocio.getFechaNacimiento()));
+            ps.setInt(6, oSocio.getId());
             ps.executeUpdate();
         }
     }
