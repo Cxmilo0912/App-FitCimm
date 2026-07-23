@@ -22,8 +22,9 @@ public class IngresoService {
 
     private IngresoDAO oIngresoDAO = new IngresoDAO();
     private MembresiaService oMembresiaService = new MembresiaService();
+    private Ingreso oIngreso = new Ingreso();
 
-    public Map<String, Object> MtRegistrarIngreso(String documento, Ingreso oIngreso) throws Exception {
+    public Map<String, Object> MtRegistrarIngreso(String documento) throws Exception {
 
         //Documento Vacio
         if (Validador.esVacio(documento)) {
