@@ -38,8 +38,8 @@ public class PlanService {
        dao.MtEditarPlan(oPlan);
     }
     
-    public void MtIntivarPlan(Plan oPlan) throws Exception{
-        dao.MtInactivarPlan(oPlan);
+    public void MtInativarPlan(boolean estado,int id) throws Exception{
+        dao.MtInactivarPlan(estado,id);
     }
     
     public double MtTotalRecaudo(LocalDate fecha1, LocalDate fecha2) throws Exception {

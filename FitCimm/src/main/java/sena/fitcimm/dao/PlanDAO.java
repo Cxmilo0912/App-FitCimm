@@ -46,10 +46,11 @@ public class PlanDAO {
 
     }
 
-    public void MtInactivarPlan(Plan oPlan) throws SQLException {
+    public void MtInactivarPlan(boolean estado,int id) throws SQLException {
         String consulta = "Update plan set activo=? where id_plan=?";
         try (Connection con = ConexionDB.getConnection(); PreparedStatement ps = con.prepareStatement(consulta)) {
-            ps.setBoolean(1, oPlan.isActivo());
+            ps.setBoolean(1, estado);
+            ps.setInt(2, id);
             ps.executeUpdate();
 
         }
