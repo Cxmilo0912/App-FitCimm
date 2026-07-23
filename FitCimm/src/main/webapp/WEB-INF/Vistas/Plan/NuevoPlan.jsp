@@ -504,12 +504,12 @@
 
             <!-- Tarjeta Formulario -->
             <div class="form-card">
-                <form>
+                <form action="PlanController" method="POST">
 
                     <!-- Nombre del Plan -->
                     <div class="input-group">
                         <label for="plan_name">Nombre del Plan</label>
-                        <input type="text" id="plan_name" class="input-field" placeholder="Ej. Premium Corporate" />
+                        <input type="text" name="plan_name" class="input-field" placeholder="Ej. Premium Corporate" />
                         <span class="input-hint">El nombre visible para los socios en el portal de
                             administración.</span>
                     </div>
@@ -520,7 +520,7 @@
                             <label for="plan_duration">Duración (Días)</label>
                             <div class="input-wrapper">
                                 <span class="material-symbols-outlined">calendar_month</span>
-                                <input type="number" id="plan_duration" class="input-field" placeholder="365" />
+                                <input type="number" name="plan_duration" class="input-field" placeholder="365"  />
                             </div>
                         </div>
 
@@ -529,18 +529,13 @@
                             <label for="plan_value">Valor (USD)</label>
                             <div class="input-wrapper">
                                 <span class="material-symbols-outlined">attach_money</span>
-                                <input type="number" id="plan_value" step="0.01" class="input-field"
+                                <input type="number" name="plan_value" step="0.01" class="input-field"
                                     placeholder="999.00" />
                             </div>
                         </div>
                     </div>
 
-                    <!-- Descripción -->
-                    <div class="input-group">
-                        <label for="plan_description">Descripción (Opcional)</label>
-                        <textarea id="plan_description" class="input-field" rows="4"
-                            placeholder="Breve descripción de los beneficios del plan..."></textarea>
-                    </div>
+                  
 
                     <hr class="form-divider" />
 
