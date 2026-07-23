@@ -76,63 +76,63 @@
                 <!-- Header Section -->
                 <div class="text-center mb-10 md:mb-14 space-y-3">
                     <h1 class="text-3xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
-                        Sistema de Gestión de Gimnasio FitCIMM
+                        Sistema de GestiÃ³n de Gimnasio FitCIMM
                     </h1>
                     <p class="text-base md:text-lg text-slate-500 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
-                        Bienvenido al Centro de Control de su Gimnasio. Gestione fácilmente socios, ingresos, planes y reportes en un solo lugar.
+                        Bienvenido al Centro de Control de su Gimnasio. Gestione fÃ¡cilmente socios, ingresos, planes y reportes en un solo lugar.
                     </p>
                 </div>
 
                 <!-- Launcher Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
 
-                    <!-- Card: Gestión de Socios -->
+                    <!-- Card: GestiÃ³n de Socios -->
                     <a href="${pageContext.request.contextPath}/WEB-INF/Vistas/Socio/ListadoSocios.jsp"
                        class="module-card group relative bg-white dark:bg-navy-900 border border-slate-200 dark:border-slate-800 hover:border-sky-500 p-6 rounded-2xl flex flex-col items-start text-left transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-sky-500/10 h-full cursor-pointer">
                         <div class="w-14 h-14 bg-slate-100 dark:bg-slate-800 flex items-center justify-center rounded-xl mb-6 group-hover:bg-sky-500/10 transition-colors duration-300">
                             <span class="material-symbols-outlined text-[32px] text-sky-600 dark:text-sky-400">group</span>
                         </div>
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Gestión de Socios</h3>
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">GestiÃ³n de Socios</h3>
                         <p class="text-sm text-slate-500 dark:text-slate-400 mb-6 flex-grow leading-relaxed">
-                            Gestión integral del directorio de socios: cree nuevos registros, modifique perfiles y mantenga la información al día.
+                            GestiÃ³n integral del directorio de socios: cree nuevos registros, modifique perfiles y mantenga la informaciÃ³n al dÃ­a.
                         </p>
                         <div class="flex items-center gap-2 text-xs font-bold text-sky-600 dark:text-sky-400 group-hover:translate-x-1 transition-transform uppercase tracking-wider">
 
-                            <span>ACCEDER MÓDULO</span>
+                            <span>ACCEDER MÃDULO</span>
                             <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
                         </div>
                         <div class="absolute bottom-0 left-0 h-1 w-0 bg-sky-500 group-hover:w-full transition-all duration-500 rounded-b-2xl"></div>
                     </a>
 
                     <!-- Card: Control de Acceso -->
-                    <a href="${pageContext.request.contextPath}/AccesoController"
+                    <a href="${pageContext.request.contextPath}/IngresoController"
                        class="module-card group relative bg-white dark:bg-navy-900 border border-slate-200 dark:border-slate-800 hover:border-sky-500 p-6 rounded-2xl flex flex-col items-start text-left transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-sky-500/10 h-full cursor-pointer">
                         <div class="w-14 h-14 bg-slate-100 dark:bg-slate-800 flex items-center justify-center rounded-xl mb-6 group-hover:bg-sky-500/10 transition-colors duration-300">
                             <span class="material-symbols-outlined text-[32px] text-sky-600 dark:text-sky-400">security</span>
                         </div>
                         <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Control de Acceso</h3>
                         <p class="text-sm text-slate-500 dark:text-slate-400 mb-6 flex-grow leading-relaxed">
-                            Monitoreo, validación de credenciales y registros de entrada.
+                            Monitoreo, validaciÃ³n de credenciales y registros de entrada.
                         </p>
                         <div class="flex items-center gap-2 text-xs font-bold text-sky-600 dark:text-sky-400 group-hover:translate-x-1 transition-transform uppercase tracking-wider">
-                            <span>ACCEDER MÓDULO</span>
+                            <span>ACCEDER MÃDULO</span>
                             <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
                         </div>
                         <div class="absolute bottom-0 left-0 h-1 w-0 bg-sky-500 group-hover:w-full transition-all duration-500 rounded-b-2xl"></div>
                     </a>
 
-                    <!-- Card: Planes y Membresías -->
+                    <!-- Card: Planes y MembresÃ­as -->
                     <a href="${pageContext.request.contextPath}/PlanesController"
                        class="module-card group relative bg-white dark:bg-navy-900 border border-slate-200 dark:border-slate-800 hover:border-sky-500 p-6 rounded-2xl flex flex-col items-start text-left transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-sky-500/10 h-full cursor-pointer">
                         <div class="w-14 h-14 bg-slate-100 dark:bg-slate-800 flex items-center justify-center rounded-xl mb-6 group-hover:bg-sky-500/10 transition-colors duration-300">
                             <span class="material-symbols-outlined text-[32px] text-sky-600 dark:text-sky-400">payments</span>
                         </div>
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Planes y Membresías</h3>
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Planes y MembresÃ­as</h3>
                         <p class="text-sm text-slate-500 dark:text-slate-400 mb-6 flex-grow leading-relaxed">
-                            Gestión integral de la oferta: configure planes de cobro, administre la venta y renovación de membresías, y monitoree estados de vigencia.
+                            GestiÃ³n integral de la oferta: configure planes de cobro, administre la venta y renovaciÃ³n de membresÃ­as, y monitoree estados de vigencia.
                         </p>
                         <div class="flex items-center gap-2 text-xs font-bold text-sky-600 dark:text-sky-400 group-hover:translate-x-1 transition-transform uppercase tracking-wider">
-                            <span>ACCEDER MÓDULO</span>
+                            <span>ACCEDER MÃDULO</span>
                             <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
                         </div>
                         <div class="absolute bottom-0 left-0 h-1 w-0 bg-sky-500 group-hover:w-full transition-all duration-500 rounded-b-2xl"></div>
@@ -146,10 +146,10 @@
                         </div>
                         <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Reportes</h3>
                         <p class="text-sm text-slate-500 dark:text-slate-400 mb-6 flex-grow leading-relaxed">
-                            Monitoreo de ventas y análisis de datos.
+                            Monitoreo de ventas y anÃ¡lisis de datos.
                         </p>
                         <div class="flex items-center gap-2 text-xs font-bold text-sky-600 dark:text-sky-400 group-hover:translate-x-1 transition-transform uppercase tracking-wider">
-                            <span>ACCEDER MÓDULO</span>
+                            <span>ACCEDER MÃDULO</span>
                             <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
                         </div>
                         <div class="absolute bottom-0 left-0 h-1 w-0 bg-sky-500 group-hover:w-full transition-all duration-500 rounded-b-2xl"></div>
@@ -161,7 +161,7 @@
 
         <script>
             document.addEventListener('DOMContentLoaded', () => {
-                // Hover animations para rellenar los íconos de Material Symbols
+                // Hover animations para rellenar los Ã­conos de Material Symbols
                 document.querySelectorAll('.module-card').forEach(card => {
                     card.addEventListener('mouseenter', () => {
                         const icon = card.querySelector('.material-symbols-outlined');

@@ -1,3 +1,4 @@
+sena\fitcimm\controller\IngresoController.class
 sena\fitcimm\model\EstadoMembresia.class
 sena\fitcimm\service\SocioService.class
 sena\fitcimm\dao\IngresoDAO.class
@@ -6,11 +7,14 @@ sena\fitcimm\dao\PlanDAO.class
 sena\fitcimm\service\PlanService.class
 sena\fitcimm\util\Validador.class
 sena\fitcimm\model\Socio.class
+sena\fitcimm\controller\SocioController.class
 sena\fitcimm\dao\MembresiaDAO.class
 sena\fitcimm\model\Membresia.class
 sena\fitcimm\model\Ingreso.class
 sena\fitcimm\model\Plan.class
 sena\fitcimm\service\MembresiaService.class
 sena\fitcimm\util\FechaUtil.class
+sena\fitcimm\controller\MembresiaController.class
+sena\fitcimm\controller\PlanController.class
 sena\fitcimm\util\ConexionDB.class
 sena\fitcimm\service\IngresoService.class
