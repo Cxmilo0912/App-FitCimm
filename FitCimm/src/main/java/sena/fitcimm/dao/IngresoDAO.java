@@ -29,6 +29,37 @@ public class IngresoDAO {
         }
     }
 
+    public Socio MtConsultarIngresoPorDocumento(String documento) throws SQLException {
+        String consulta = "SELECT s.id_socio, s.nombres, s.apellidos, m.fecha_fin "
+                + "FROM socio s "
+                + "INNER JOIN membresia m ON s.id_socio = m.id_socio "
+                + "WHERE s.documento = ? "
+                + "ORDER BY m.fecha_fin DESC "
+                + "LIMIT 1";
+
+        try (Connection cn = ConexionDB.getConnection(); PreparedStatement ps = cn.prepareStatement(consulta)) {
+
+            ps.setString(1, documento);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Socio oSocio = new Socio();
+                    oSocio.setId(rs.getInt("id_socio"));
+                    oSocio.setNombres(rs.getString("nombres"));
+
+                    Membresia oMembresia = new Membresia();
+                    oMembresia.setFechaFin(rs.getObject("fecha_fin", LocalDate.class));
+
+                    oSocio.setMembresia(oMembresia);
+
+                    return oSocio;
+                }
+            }
+        }
+
+        return null;
+    }
+
     public List<Ingreso> MtListarIngresosPorFecha(LocalDate fecha) throws SQLException {
         List<Ingreso> lista = new ArrayList<>();
         String consulta = "SELECT * FROM ingreso WHERE fecha_ingreso = ?";
@@ -45,6 +76,23 @@ public class IngresoDAO {
         }
 
         return lista;
+    }
+    
+    public boolean MtYaIngreso(int idSocio) throws SQLException{
+        String consulta = "Select Count(*) From ingreso Where id_socio = ? and fecha_ingreso = CURDATE()";
+        
+        try(Connection cn = ConexionDB.getConnection(); PreparedStatement ps = cn.prepareStatement(consulta)){
+            
+            ps.setInt(1, idSocio);
+            
+            try(ResultSet rs = ps.executeQuery()){
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        }
+        
+        return false;
     }
 
     private Ingreso MtMapear(ResultSet rs) throws SQLException {

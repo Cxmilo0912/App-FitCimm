@@ -52,37 +52,6 @@ public class SocioDAO {
         }
 
     }
-    
-    public Socio MtBuscarPorDocumento(String documento) throws SQLException {
-        String consulta = "SELECT s.nombres, s.apellidos, DATEDIFF(m.fecha_fin, CURDATE()) AS dias_restantes "
-                + "FROM socio s "
-                + "INNER JOIN membresia m ON s.id_socio = m.id_socio "
-                + "WHERE s.documento = ? "
-                + "ORDER BY m.fecha_fin DESC "
-                + "LIMIT 1";
-
-        try (Connection cn = ConexionDB.getConnection(); PreparedStatement ps = cn.prepareStatement(consulta)) {
-
-            ps.setString(1, documento);
-
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    Socio oSocio = new Socio();
-                    oSocio.setNombres(rs.getString("nombres"));
-
-                    Membresia oMembresia = new Membresia();
-                    oMembresia.setFechaFin(rs.getObject("fecha_fin", LocalDate.class));
-
-                    oSocio.setMembresia(oMembresia);
-
-                    return oSocio;
-                }
-            }
-        }
-
-        return null;
-    }
-    
 
     public void MtEditarSocio(Socio oSocio) throws SQLException {
         String consulta = "UPDATE socio SET nombres = ?, apellidos = ?,"
