@@ -20,6 +20,28 @@ public class MembresiaService {
     
     
     public Membresia MtVender(int idSocio, Plan plan,double valor) throws Exception { 
+        List<Socio> listaMembresias = dao.MtListarMembresias();
+        
+        EstadoMembresia estado = null;
+        
+        for(Socio socio:listaMembresias){
+            if(socio.getId() == idSocio && socio.getMembresia() != null){
+                estado = MTCalcularEstado(socio.getMembresia());
+            break;
+            }
+        }
+        
+        if(estado != null){
+            if(estado == EstadoMembresia.VIGENTE || estado == EstadoMembresia.POR_VENCER){
+                throw new Exception("¡Alerta! El socio ya cuenta con una membresía " + estado + ". No se puede registrar otra hasta que finalice.");
+            }
+            else if(estado == EstadoMembresia.VENCIDA){
+                throw new Exception("¡Alerta! El socio ya cuenta con una membresía " + estado + "Renueve la membresia actual.");
+            }
+        }
+        
+        
+        
         LocalDate inicio = LocalDate.now(); 
         LocalDate fin = inicio.plusDays(plan.getDuracionDias()); 
         Membresia oMembresia = new Membresia();
@@ -46,7 +68,7 @@ public class MembresiaService {
         return EstadoMembresia.VIGENTE; 
     }
      
-     public List<Socio> MtListarMembresiasVigentes() throws Exception {
-    return dao.MtListarMembresiasVigentes();
+     public List<Socio> MtListarMembresias() throws Exception {
+    return dao.MtListarMembresias();
      }
 }

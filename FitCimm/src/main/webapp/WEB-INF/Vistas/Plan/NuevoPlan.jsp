@@ -429,62 +429,12 @@
 
 <body>
 
-    <!-- Sidebar Lateral -->
-    <aside class="sidebar">
-        <div class="brand">
-            <div class="brand-title">PartnerPortal</div>
-            <div class="brand-subtitle">Enterprise Admin</div>
-        </div>
-
-        <nav class="nav-menu">
-            <a class="nav-item" href="#">
-                <span class="material-symbols-outlined">dashboard</span>
-                <span>Dashboard</span>
-            </a>
-            <a class="nav-item active" href="#">
-                <span class="material-symbols-outlined">handshake</span>
-                <span>Partners & Planes</span>
-            </a>
-            <a class="nav-item" href="#">
-                <span class="material-symbols-outlined">analytics</span>
-                <span>Reportes</span>
-            </a>
-            <a class="nav-item" href="#">
-                <span class="material-symbols-outlined">settings</span>
-                <span>Configuración</span>
-            </a>
-        </nav>
-
-        <div class="sidebar-footer">
-            <img class="profile-avatar"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDETPUfqImUOXVK0CfciSUui6Ij8wcIJ8uGU1Y4Z7MTl2eOq6qnwpN4Q8qPrgFXEqRcxHYZ1sfhOMZr-cig9_9qSD-HDzQNJVPVU6Xo_Jap6glyqhdHA6DDuYORrIFEoqgDx5ilTjyWffmfSSgO7TN90KGpS1ipFhWEO8SPSmq69A3vqx9l68LrsMX7UpOTZMuQaWi57L7wYEOzuEdegoFG2o3x3RE6qYNVLbZ9tIr_G-2a780whL693h3rQ0LXp47nJmy31KCiZX_o"
-                alt="Admin Avatar" />
-            <div>
-                <p style="font-size: 13px; font-weight: 600; color: #fff;">Admin User</p>
-                <p style="font-size: 11px; color: #94a3b8;">Activo</p>
-            </div>
-        </div>
-    </aside>
+      <jsp:include page="/WEB-INF/Vistas/Menu.jsp" />
 
     <!-- Contenedor Principal -->
     <div class="main-wrapper">
 
-        <!-- Barra Superior -->
-        <header class="top-header">
-            <div class="search-box">
-                <span class="material-symbols-outlined">search</span>
-                <input type="text" placeholder="Buscar en la consola..." />
-            </div>
-
-            <div class="header-actions">
-                <button class="icon-btn" title="Notificaciones">
-                    <span class="material-symbols-outlined">notifications</span>
-                </button>
-                <button class="icon-btn" title="Perfil">
-                    <span class="material-symbols-outlined">account_circle</span>
-                </button>
-            </div>
-        </header>
+       
 
         <!-- Canvas de Contenido -->
         <main class="content-container">
@@ -553,6 +503,15 @@
 
         </main>
     </div>
+    <%
+        String error = (String) request.getAttribute("error");
+    
+    %>
+    <script>
+            window.addEventListener('DOMContentLoaded', () => {
+                sweetAlert.error("¡Error!", "<%= error%>");
+            });
+        </script>
 
 </body>
 
