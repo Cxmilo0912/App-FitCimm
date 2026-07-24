@@ -92,13 +92,13 @@
                         <div class="w-14 h-14 bg-slate-100 dark:bg-slate-800 flex items-center justify-center rounded-xl mb-6 group-hover:bg-sky-500/10 transition-colors duration-300">
                             <span class="material-symbols-outlined text-[32px] text-sky-600 dark:text-sky-400">group</span>
                         </div>
-                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">GestiÃ³n de Socios</h3>
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Gestión de Socios</h3>
                         <p class="text-sm text-slate-500 dark:text-slate-400 mb-6 flex-grow leading-relaxed">
                             GestiÃ³n integral del directorio de socios: cree nuevos registros, modifique perfiles y mantenga la informaciÃ³n al dÃ­a.
                         </p>
                         <div class="flex items-center gap-2 text-xs font-bold text-sky-600 dark:text-sky-400 group-hover:translate-x-1 transition-transform uppercase tracking-wider">
 
-                            <span>ACCEDER MÃDULO</span>
+                            <span>ACCEDER MÓDULO</span>
                             <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
                         </div>
                         <div class="absolute bottom-0 left-0 h-1 w-0 bg-sky-500 group-hover:w-full transition-all duration-500 rounded-b-2xl"></div>
@@ -112,7 +112,7 @@
                         </div>
                         <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Control de Acceso</h3>
                         <p class="text-sm text-slate-500 dark:text-slate-400 mb-6 flex-grow leading-relaxed">
-                            Monitoreo, validaciÃ³n de credenciales y registros de entrada.
+                            Monitoreo, validación de credenciales y registros de entrada.
                         </p>
                         <div class="flex items-center gap-2 text-xs font-bold text-sky-600 dark:text-sky-400 group-hover:translate-x-1 transition-transform uppercase tracking-wider">
                             <span>ACCEDER MÃDULO</span>
@@ -121,8 +121,9 @@
                         <div class="absolute bottom-0 left-0 h-1 w-0 bg-sky-500 group-hover:w-full transition-all duration-500 rounded-b-2xl"></div>
                     </a>
 
-                    <!-- Card: Planes y MembresÃ­as -->
-                    <a href="${pageContext.request.contextPath}/PlanesController"
+
+
+                    <a href="${pageContext.request.contextPath}/PlanController?accion=gestion"
                        class="module-card group relative bg-white dark:bg-navy-900 border border-slate-200 dark:border-slate-800 hover:border-sky-500 p-6 rounded-2xl flex flex-col items-start text-left transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-sky-500/10 h-full cursor-pointer">
                         <div class="w-14 h-14 bg-slate-100 dark:bg-slate-800 flex items-center justify-center rounded-xl mb-6 group-hover:bg-sky-500/10 transition-colors duration-300">
                             <span class="material-symbols-outlined text-[32px] text-sky-600 dark:text-sky-400">payments</span>
@@ -139,7 +140,7 @@
                     </a>
 
                     <!-- Card: Reportes -->
-                    <a href="${pageContext.request.contextPath}/ReportesController"
+                    <a href="${pageContext.request.contextPath}/PlanController?accion=reportes"
                        class="module-card group relative bg-white dark:bg-navy-900 border border-slate-200 dark:border-slate-800 hover:border-sky-500 p-6 rounded-2xl flex flex-col items-start text-left transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-sky-500/10 h-full cursor-pointer">
                         <div class="w-14 h-14 bg-slate-100 dark:bg-slate-800 flex items-center justify-center rounded-xl mb-6 group-hover:bg-sky-500/10 transition-colors duration-300">
                             <span class="material-symbols-outlined text-[32px] text-sky-600 dark:text-sky-400">analytics</span>
