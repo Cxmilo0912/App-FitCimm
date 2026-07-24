@@ -16,7 +16,8 @@
 
     if (resultado != null) {
         nombres = (String) resultado.get("nombres");
-        diasRestantes = (Integer) resultado.get("diasRestantes");
+        Number diasNum = (Number) resultado.get("diasRestantes");
+        diasRestantes = (diasNum != null) ? diasNum.intValue() : 0;
         mostrarModal = true;
     }
 %>
@@ -31,11 +32,11 @@
         <!-- Tipografías e Iconos -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700;900&family=JetBrains+Mono:wght@500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" rel="stylesheet">
+
         <link
             href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap"
             rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-              rel="stylesheet" />
 
         <style>
             /* ==========================================================================
@@ -692,11 +693,31 @@
             .blur-sm {
                 filter: blur(4px);
             }
+            .material-symbols-outlined {
+                font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            }
         </style>
+        <script>
+            (function () {
+                const savedTheme = localStorage.getItem('theme');
+                const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+                    document.documentElement.classList.add('dark');
+                }
+            })();
+        </script>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme.css"/>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="${pageContext.request.contextPath}/js/sweetAlert.js"></script>
     </head>
 
     <body>
 
+        <button type="button" id="themeToggle" onclick="toggleTheme()"
+                class="fixed top-6 right-6 p-2.5 bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm hover:shadow-md transition-all z-50 cursor-pointer">
+            <span class="material-symbols-outlined text-[20px] dark:hidden">dark_mode</span>
+            <span class="material-symbols-outlined text-[20px] hidden dark:block">light_mode</span>
+        </button>
         <!-- Contenedor Principal -->
         <div class="main-wrapper">
 
@@ -718,7 +739,7 @@
                             <div class="scanner-icon-circle">
                                 <span class="material-symbols-outlined">person_search</span>
                             </div>
-                            <label class="input-label" for="doc_input">Identificación del Socio</label>
+                            <label class="input-label" for="iptDocumento">Identificación del Socio</label>
                             <form action="${pageContext.request.contextPath}/IngresoController" method="POST">
                                 <div class="input-field-container">
                                     <input type="text" id="iptDocumento" name="documentoSocio"/>
@@ -758,39 +779,35 @@
 
                 </div>
 
+                <div class="mb-6 flex items-center gap-4">
+                    <form action="${pageContext.request.contextPath}/IngresoController" method="GET" class="flex items-center gap-3">
+                        <label for="fechaConsulta" class="text-sm font-semibold text-slate-700 dark:text-slate-300">Consultar fecha:</label>
+                        <input type="date" id="fechaConsulta" name="fechaConsulta" value="<%= request.getParameter("fechaConsulta") != null ? request.getParameter("fechaConsulta") : ""%>"
+                               class="px-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-800 dark:text-slate-200 text-sm">
+                        <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-bold transition-all">
+                            Buscar
+                        </button>
+                    </form>
+                </div>
+
                 <!-- Sección Tabla de Historial Reciente -->
                 <div class="history-section">
                     <div class="history-header">
-                        <h3>Historial Reciente</h3>
+                        <h3>Historial Diario de Ingresos</h3>
                     </div>
 
                     <div class="table-card">
-                        <table class="history-table">
+                        <table id="historialDiario" class="history-table">
                             <thead>
                                 <tr>
-                                    <th style="width: 100px;">Hora</th>
-                                    <th>Socio</th>
+                                    <th style="width: 100px;">Hora Ingreso</th>
+                                    <th>Nombres</th>
+                                    <th>Apellidos</th>
                                     <th>Documento</th>
-                                    <th style="text-align: right;">Estado</th>
+                                    <th>Telefono</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="time-cell">09:41 AM</td>
-                                    <td>
-                                        <div class="partner-info-cell">
-                                            <span class="partner-name">Ana María Torres</span>
-                                            <span class="partner-tier">Membresía Individual Gold</span>
-                                        </div>
-                                    </td>
-                                    <td class="doc-cell">10.023.498-K</td>
-                                    <td style="text-align: right;">
-                                        <span class="badge-status authorized">
-                                            <span class="status-indicator"></span>
-                                            <span>Autorizado</span>
-                                        </span>
-                                    </td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -799,40 +816,40 @@
             </main>
         </div>
 
-        <!-- Modal de Resultado -->
-        <div class="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-hidden <%= mostrarModal ?"": "hidden" %> id="checkinModal" style="background: rgba(0,0,0,0.4);">
-            <div class="bg-white w-full max-w-lg rounded-lg relative overflow-hidden border border-slate-200 shadow-xl">
+        <!-- Modal de Resultado (Actualizado con soporte Dark Mode) -->
+        <div class="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-hidden <%= mostrarModal ? "" : "hidden"%>" id="checkinModal" style="background: rgba(0,0,0,0.6);">
+            <div class="bg-white dark:bg-slate-900 w-full max-w-lg rounded-lg relative overflow-hidden border border-slate-200 dark:border-slate-800 shadow-xl transition-colors">
                 <!-- Auto-close Timer Bar -->
-                <div class="h-1 bg-blue-600 w-full animate-autoclose" id="timerBar"></div>
+                <div class="h-1 bg-blue-600 dark:bg-blue-500 w-full animate-autoclose" id="timerBar"></div>
                 <div class="p-12 flex flex-col items-center text-center">
                     <!-- Close Button -->
                     <button aria-label="Cerrar modal"
-                            class="absolute top-6 right-6 text-slate-400 hover:text-slate-800 transition-colors"
+                            class="absolute top-6 right-6 text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors"
                             onclick="closeModal()">
                         <span class="material-symbols-outlined">close</span>
                     </button>
                     <!-- Status Icon -->
-                    <div class="w-24 h-24 bg-emerald-50 rounded-full flex items-center justify-center mb-8 relative">
+                    <div class="w-24 h-24 bg-emerald-50 dark:bg-emerald-950/50 rounded-full flex items-center justify-center mb-8 relative">
                         <div class="absolute inset-0 rounded-full border-2 border-emerald-500/20"></div>
-                        <span class="material-symbols-outlined text-emerald-600 text-6xl"
+                        <span class="material-symbols-outlined text-emerald-600 dark:text-emerald-400 text-6xl"
                               style="font-variation-settings: 'FILL' 1;">check_circle</span>
                     </div>
                     <!-- Main Message -->
-                    <h3 class="text-sm uppercase tracking-[0.2em] text-emerald-700 mb-2 font-bold">Acceso Autorizado</h3>
-                    <h2 class="text-3xl font-bold text-slate-900 mb-8"><%= nombres %></h2>
+                    <h3 class="text-sm uppercase tracking-[0.2em] text-emerald-700 dark:text-emerald-400 mb-2 font-bold">Acceso Autorizado</h3>
+                    <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-8"><%= nombres%></h2>
 
                     <!-- Membership Details -->
                     <div class="w-full grid grid-cols-2 gap-4 mb-10">
-                        <div class="bg-slate-50 p-4 text-left border border-slate-200 rounded">
-                            <p class="text-[10px] uppercase text-slate-500 mb-2">Estado Membresía</p>
+                        <div class="bg-slate-50 dark:bg-slate-800/60 p-4 text-left border border-slate-200 dark:border-slate-800 rounded">
+                            <p class="text-[10px] uppercase text-slate-500 dark:text-slate-400 mb-2">Estado Membresía</p>
                             <div class="flex items-center gap-2">
                                 <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                                <span class="text-sm font-bold uppercase tracking-wider text-emerald-700">Activo</span>
+                                <span class="text-sm font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">Activo</span>
                             </div>
                         </div>
-                        <div class="bg-slate-50 p-4 text-left border border-slate-200 rounded">
-                            <p class="text-[10px] uppercase text-slate-500 mb-2">Plan Actual</p>
-                            <span class="text-sm font-bold uppercase tracking-wider text-slate-800">Individual Gold</span>
+                        <div class="bg-slate-50 dark:bg-slate-800/60 p-4 text-left border border-slate-200 dark:border-slate-800 rounded">
+                            <p class="text-[10px] uppercase text-slate-500 dark:text-slate-400 mb-2">Plan Actual</p>
+                            <span class="text-sm font-bold uppercase tracking-wider text-slate-800 dark:text-slate-200">Individual Gold</span>
                         </div>
                     </div>
 
@@ -840,24 +857,24 @@
                     <div class="w-full mb-10">
                         <div class="flex justify-between items-end mb-2">
                             <div class="text-left">
-                                <p class="text-[10px] uppercase text-slate-500">Vencimiento del Ciclo</p>
-                                <p class="text-lg font-bold text-slate-800">Días restantes: <%= diasRestantes %></p>
+                                <p class="text-[10px] uppercase text-slate-500 dark:text-slate-400">Vencimiento del Ciclo</p>
+                                <p class="text-lg font-bold text-slate-800 dark:text-slate-200">Días restantes: <%= diasRestantes%></p>
                             </div>
-                            <span class="text-[10px] font-bold text-blue-600">50% COMPLETADO</span>
+                            <span class="text-[10px] font-bold text-blue-600 dark:text-blue-400">50% COMPLETADO</span>
                         </div>
-                        <div class="h-2 w-full bg-slate-200 rounded-full overflow-hidden">
-                            <div class="h-full bg-blue-600 w-1/2"></div>
+                        <div class="h-2 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+                            <div class="h-full bg-blue-600 dark:bg-blue-500 w-1/2"></div>
                         </div>
                     </div>
 
                     <!-- Footer Action -->
-                    <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-5 font-bold uppercase tracking-[0.2em] text-sm transition-all flex items-center justify-center gap-2 rounded shadow-md"
+                    <button class="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500 text-white py-5 font-bold uppercase tracking-[0.2em] text-sm transition-all flex items-center justify-center gap-2 rounded shadow-md"
                             style="color: #ffffff;"
                             onclick="closeModal()">
                         Entendido
-                        <span class="material-symbols-outlined text-lg " style="color: #ffffff;">check</span>
+                        <span class="material-symbols-outlined text-lg" style="color: #ffffff;">check</span>
                     </button>
-                    <p class="mt-6 text-[10px] text-slate-400 uppercase tracking-widest">Registrado el 22 de mayo de 2024 a las 13:24</p>
+                    <p class="mt-6 text-[10px] text-slate-400 dark:text-slate-500 uppercase tracking-widest">Registrado el 22 de mayo de 2024 a las 13:24</p>
                 </div>
             </div>
         </div>
@@ -902,7 +919,35 @@
                     closeModal();
                 }, 4000);
             }
+
+            // Si el modal debe mostrarse al cargar la página (según backend), activar el temporizador de cierre automático
+            window.addEventListener('DOMContentLoaded', () => {
+                const modal = document.getElementById('checkinModal');
+                if (modal && !modal.classList.contains('hidden')) {
+                    const mainCanvas = document.getElementById('mainCanvas');
+                    if (mainCanvas) {
+                        mainCanvas.classList.add('blur-sm');
+                    }
+                    autoCloseTimer = setTimeout(() => {
+                        closeModal();
+                    }, 4000);
+                }
+            });
         </script>
+
+        <%
+            String error = (String) request.getAttribute("errorMsg");
+
+            if (error != null && !error.isEmpty()) {
+        %>
+        <script>
+            window.addEventListener('DOMContentLoaded', () => {
+                sweetAlert.error("¡Error!", "<%= error%>");
+            });
+        </script>
+        <%}%>
+
+        <script src="${pageContext.request.contextPath}/js/theme.js"></script>
 
     </body>
 </html>

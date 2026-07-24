@@ -41,7 +41,7 @@ public class IngresoController extends HttpServlet {
             req.getRequestDispatcher("/WEB-INF/Vistas/Ingreso/ModuloIngreso.jsp").forward(req, resp);
 
         } catch (Exception e) {
-            req.getSession().setAttribute("errorMsg", e.getMessage());
+            req.setAttribute("errorMsg", e.getMessage());
             req.getRequestDispatcher("/WEB-INF/Vistas/Ingreso/ModuloIngreso.jsp").forward(req, resp);
 
         }

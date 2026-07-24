@@ -31,15 +31,23 @@ public class IngresoService {
             throw new Exception("El número de documento es obligatorio.");
         }
 
+        if (!Validador.esNumero(documento)) {
+            throw new Exception("El documento debe estar constituido unicamente por números.");
+        }
+
+        if (!Validador.tieneLongitudValida(documento, 9, 11)) {
+            throw new Exception("El documento debe tener una longitud entre 9-11 números");
+        }
+
         Socio oSocio = oIngresoDAO.MtConsultarIngresoPorDocumento(documento);
 
         //Socio inexistente o sin membresia registrada
         if (oSocio == null || oSocio.getMembresia() == null) {
             throw new Exception("El socio no existe o no tiene una membresía registrada.");
         }
-        
+
         //Verificar Socio activo
-        if (!oSocio.isActivo()) {
+        if (oSocio.isActivo()) {
             throw new Exception("El socio no puede ingresar debido a que se encuentra inactivo");
         }
 
@@ -49,7 +57,6 @@ public class IngresoService {
             throw new Exception("El socio no puede ingresar debido a que su membresia esta vencida");
         }
 
-
         //Verificar si ya ingreso el dia de hoy
         if (oIngresoDAO.MtYaIngreso(oSocio.getId())) {
             throw new Exception("Acceso denegado: El socio " + oSocio.getNombres() + " ya tiene registrado un ingreso el dia de hoy");
@@ -57,7 +64,6 @@ public class IngresoService {
 
         //Calcular los dias restantes de la membresia del socio
         long diasRestantes = FechaUtil.diasRestantes(oSocio.getMembresia().getFechaFin());
-
 
         //Registrar el Ingreso
         if (oIngreso == null) {
@@ -74,5 +80,6 @@ public class IngresoService {
         return resultado;
 
     }
+    
 
 }

@@ -60,9 +60,12 @@ public class IngresoDAO {
         return null;
     }
 
-    public List<Ingreso> MtListarIngresosPorFecha(LocalDate fecha) throws SQLException {
-        List<Ingreso> lista = new ArrayList<>();
-        String consulta = "SELECT * FROM ingreso WHERE fecha_ingreso = ?";
+    public List<Map<String, Object>> MtListarIngresosPorFecha(LocalDate fecha) throws SQLException {
+        List<Map<String, Object>> lista = new ArrayList<>();
+        String consulta = "SELECT s.nombres, s.apellidos, s.documento, s.telefono, i.hora_ingreso as horaIngreso  FROM socio s "
+                + "Inner Join ingreso i"
+                + "ON s.id_socio = i.id_socio"
+                + "WHERE fecha_ingreso = ?";
 
         try (Connection cn = ConexionDB.getConnection(); PreparedStatement ps = cn.prepareStatement(consulta)) {
 
@@ -70,28 +73,35 @@ public class IngresoDAO {
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    lista.add(MtMapear(rs));
+                    Map<String, Object> datosIngreso = new HashMap<>();
+                    datosIngreso.put("nombres", rs.getString("nombres"));
+                    datosIngreso.put("apellidos", rs.getString("apellidos"));
+                    datosIngreso.put("documento", rs.getString("documento"));
+                    datosIngreso.put("telefono", rs.getString("telefono"));
+                    datosIngreso.put("horaIngreso", rs.getObject("horaIngreso", LocalTime.class));
+                
+                    lista.add(datosIngreso);
                 }
             }
-        }
 
-        return lista;
+            return lista;
+        }
     }
-    
-    public boolean MtYaIngreso(int idSocio) throws SQLException{
+
+    public boolean MtYaIngreso(int idSocio) throws SQLException {
         String consulta = "Select Count(*) From ingreso Where id_socio = ? and fecha_ingreso = CURDATE()";
-        
-        try(Connection cn = ConexionDB.getConnection(); PreparedStatement ps = cn.prepareStatement(consulta)){
-            
+
+        try (Connection cn = ConexionDB.getConnection(); PreparedStatement ps = cn.prepareStatement(consulta)) {
+
             ps.setInt(1, idSocio);
-            
-            try(ResultSet rs = ps.executeQuery()){
+
+            try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return rs.getInt(1) > 0;
                 }
             }
         }
-        
+
         return false;
     }
 

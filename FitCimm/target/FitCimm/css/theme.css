@@ -1,24 +1,89 @@
-/*
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this template
-*/
-/* 
-    Created on : 22/07/2026, 4:32:15 p. m.
-    Author     : julil
-*/
-
-:root {
-    --bg-primary: #f8fafc;
-    --text-primary: #0f172a;
-}
-
+/* ============ Variables del JSP con soporte dark ============ */
 html.dark {
-    --bg-primary: #0b0f19;
-    --text-primary: #f8fafc;
+    --bg-main: #0b0f19;
+    --bg-surface: #111827;
+    --sidebar-bg: #020617;
+    --sidebar-hover: #1e293b;
+
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+
+    --border-color: #334155;
+    --border-light: #1f2937;
+
+    --primary-light: #1e3a5f;
 }
 
-body {
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-    transition: background-color 0.3s ease, color 0.3s ease;
+/* ============ Reemplazo de clases dark: de Tailwind (no cargado) ============ */
+html.dark .dark\:hidden {
+    display: none !important;
+}
+html.dark .dark\:block  {
+    display: block !important;
+}
+
+html.dark .dark\:bg-slate-800   {
+    background-color: #1e293b !important;
+}
+html.dark .dark\:bg-slate-900   {
+    background-color: #0f172a !important;
+}
+html.dark .dark\:bg-slate-800\/60 {
+    background-color: rgba(30,41,59,0.6) !important;
+}
+html.dark .dark\:bg-blue-600    {
+    background-color: #2563eb !important;
+}
+html.dark .dark\:bg-emerald-950\/50 {
+    background-color: rgba(2,44,34,0.5) !important;
+}
+
+html.dark .dark\:text-slate-200 {
+    color: #e2e8f0 !important;
+}
+html.dark .dark\:text-slate-300 {
+    color: #cbd5e1 !important;
+}
+html.dark .dark\:text-slate-400 {
+    color: #94a3b8 !important;
+}
+html.dark .dark\:text-slate-500 {
+    color: #64748b !important;
+}
+html.dark .dark\:text-white     {
+    color: #ffffff !important;
+}
+html.dark .dark\:text-emerald-400 {
+    color: #34d399 !important;
+}
+html.dark .dark\:text-blue-400  {
+    color: #60a5fa !important;
+}
+
+html.dark .dark\:border-slate-700 {
+    border-color: #334155 !important;
+}
+html.dark .dark\:border-slate-800 {
+    border-color: #1f2937 !important;
+}
+
+html.dark .dark\:hover\:text-slate-200:hover {
+    color: #e2e8f0 !important;
+}
+html.dark .dark\:hover\:bg-blue-500:hover {
+    background-color: #3b82f6 !important;
+}
+
+html.dark .dark\:bg-blue-500 {
+    background-color: #3b82f6 !important;
+}
+
+.history-table th {
+    background-color: #f1f5f9;
+}
+.row-denied {
+    background-color: #fef2f2;
+}
+.history-table tbody tr:hover {
+    background-color: #f8fafc;
 }
