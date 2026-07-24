@@ -63,8 +63,8 @@ public class IngresoDAO {
     public List<Map<String, Object>> MtListarIngresosPorFecha(LocalDate fecha) throws SQLException {
         List<Map<String, Object>> lista = new ArrayList<>();
         String consulta = "SELECT s.nombres, s.apellidos, s.documento, s.telefono, i.hora_ingreso as horaIngreso  FROM socio s "
-                + "Inner Join ingreso i"
-                + "ON s.id_socio = i.id_socio"
+                + "Inner Join ingreso i "
+                + "ON s.id_socio = i.id_socio "
                 + "WHERE fecha_ingreso = ?";
 
         try (Connection cn = ConexionDB.getConnection(); PreparedStatement ps = cn.prepareStatement(consulta)) {

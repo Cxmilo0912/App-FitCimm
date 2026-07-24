@@ -7,9 +7,15 @@ package sena.fitcimm.service;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import sena.fitcimm.dao.*;
 import sena.fitcimm.model.*;
+import sena.fitcimm.util.FechaUtil;
 import sena.fitcimm.util.Validador;
+import sena.fitcimm.service.*;
 
 /**
  *
@@ -19,9 +25,10 @@ public class SocioService {
 
     private SocioDAO oSocioDao = new SocioDAO();
 
+    private MembresiaService oMembresiaService = new MembresiaService();
+
     public void MtRegistrarSocio(Socio s) throws Exception {
 
-        
         MtValidarDatos(s);
         if (oSocioDao.MtExisteDocumento(s.getDocumento())) {
             throw new Exception("Ya existe un socio con ese documento");
@@ -29,20 +36,41 @@ public class SocioService {
 
         oSocioDao.MtInsertarSocio(s);
     }
-    
-    public void MtActualizarSocio(Socio s) throws Exception{
+
+    public void MtActualizarSocio(Socio s) throws Exception {
         if (s == null || s.getId() <= 0) {
             throw new Exception("Identificador del socio no válido para actualizar su informacion.");
         }
-        
+
         MtValidarDatos(s);
-        
+
         oSocioDao.MtEditarSocio(s);
     }
-    
-    public void MtCambiarEstado(int id, boolean estado) throws Exception{
-        
+
+    public void MtCambiarEstado(int id, boolean estado) throws Exception {
+
         oSocioDao.MtCambiarEstado(id, estado);
+    }
+
+    public List<Map<String, Object>> MtListarSociosConEstado() throws Exception {
+        List<Socio> listaSocios = oSocioDao.MtListar();
+        List<Map<String, Object>> listaResultado = new ArrayList<>();
+
+        for (Socio socio : listaSocios) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("nombres", socio.getNombres());
+            map.put("apellidos", socio.getApellidos());
+            map.put("documento", socio.getDocumento());
+            map.put("telefono", socio.getTelefono());
+            map.put("email", socio.getCorreo());
+
+            EstadoMembresia estado = oMembresiaService.MTCalcularEstado(socio.getMembresia());
+            map.put("estadoMembresia", estado != null ? estado.name() : "VENCIDA");
+
+            listaResultado.add(map);
+        }
+
+        return listaResultado;
     }
 
     private void MtValidarDatos(Socio s) throws Exception {
