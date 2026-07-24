@@ -23,9 +23,13 @@ public class SocioDAO {
 
     public List<Socio> MtListar() throws SQLException {
         List<Socio> lista = new ArrayList<>();
-        String consulta = "Select * From Socio";
+        // Ajusta "membresia m" y "s.id_socio = m.id_socio" según los nombres reales de tus tablas y llaves foráneas
+        String consulta = "SELECT s.nombres, s.apellidos, s.documento, s.telefono, s.email, m.fecha_fin "
+                + "FROM socio s "
+                + "INNER JOIN membresia m ON s.id_socio = m.id_socio";
 
         try (Connection cn = ConexionDB.getConnection(); PreparedStatement ps = cn.prepareStatement(consulta); ResultSet rs = ps.executeQuery()) {
+
             while (rs.next()) {
                 lista.add(MtMapear(rs));
             }

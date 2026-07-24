@@ -4,7 +4,9 @@
  */
 package sena.fitcimm.service;
 
+import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import sena.fitcimm.dao.IngresoDAO;
 import sena.fitcimm.model.Ingreso;
@@ -79,6 +81,14 @@ public class IngresoService {
 
         return resultado;
 
+    }
+    
+    public List<Map<String,Object>> MtListarIngresosPorFecha(LocalDate fecha) throws Exception{
+    
+        if (Validador.esVacio(fecha.toString())) {
+            throw new Exception("La fecha no es válida");
+        }
+        return oIngresoDAO.MtListarIngresosPorFecha(fecha);
     }
     
 

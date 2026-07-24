@@ -10,6 +10,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 import sena.fitcimm.service.IngresoService;
 
@@ -24,7 +26,29 @@ public class IngresoController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-            req.getRequestDispatcher("/WEB-INF/Vistas/Ingreso/ModuloIngreso.jsp").forward(req, resp);
+        IngresoService oService = new IngresoService();
+        LocalDate fechaConsulta;
+
+        try {
+            String fechaStr = req.getParameter("fechaConsulta");
+
+            if (fechaStr != null && !fechaStr.isEmpty()) {
+                fechaConsulta = LocalDate.parse(fechaStr);
+            } else {
+                fechaConsulta = LocalDate.now();
+            }
+            List<Map<String, Object>> listaHistorial = oService.MtListarIngresosPorFecha(fechaConsulta);
+            req.setAttribute("historial", listaHistorial);
+
+        } catch (Exception e) {
+            req.setAttribute("errorMsg", "Error al cargar el historial: " + e.getMessage());
+            try {
+                req.setAttribute("historial", oService.MtListarIngresosPorFecha(LocalDate.now()));
+            } catch (Exception ignored) {
+            }
+        }
+
+        req.getRequestDispatcher("/WEB-INF/Vistas/Ingreso/ModuloIngreso.jsp").forward(req, resp);
     }
 
     //Ingreso
@@ -38,14 +62,13 @@ public class IngresoController extends HttpServlet {
         try {
             Map<String, Object> resultado = oService.MtRegistrarIngreso(documento);
             req.setAttribute("resultadoIngreso", resultado);
-            req.getRequestDispatcher("/WEB-INF/Vistas/Ingreso/ModuloIngreso.jsp").forward(req, resp);
 
         } catch (Exception e) {
             req.setAttribute("errorMsg", e.getMessage());
-            req.getRequestDispatcher("/WEB-INF/Vistas/Ingreso/ModuloIngreso.jsp").forward(req, resp);
 
         }
 
+        doGet(req, resp);
     }
 
 }
