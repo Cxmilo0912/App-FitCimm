@@ -28,12 +28,16 @@ public class MembresiaDAO {
 
     }
 
-    public List<Socio> MtListarMembresiasVigentes() throws SQLException {
+    public List<Socio> MtListarMembresias() throws SQLException {
         List<Socio> lista = new ArrayList<>();
-        String consulta = "SELECT s.*, m.id_membresia, m.id_plan, m.fecha_inicio, m.fecha_fin, m.valor_pagado, "
-                + "FROM socio s "
-                + "INNER JOIN membresia m ON s.id_socio = m.id_socio "
-                + "WHERE s.activo = 1 AND m.fecha_fin >= CURDATE()";
+        String consulta = "SELECT s.*, m.id_membresia, m.id_plan, m.fecha_inicio, m.fecha_fin, m.valor_pagado "
+            + "FROM socio s "
+            + "INNER JOIN membresia m ON s.id_socio = m.id_socio "
+            + "INNER JOIN ("
+            + "    SELECT id_socio, MAX(fecha_fin) AS max_fin "
+            + "    FROM membresia "
+            + "    GROUP BY id_socio"
+            + ") ultima ON m.id_socio = ultima.id_socio AND m.fecha_fin = ultima.max_fin";
 
         try (Connection con = ConexionDB.getConnection(); PreparedStatement ps = con.prepareStatement(consulta); ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {

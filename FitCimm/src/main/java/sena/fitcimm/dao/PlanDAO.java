@@ -103,7 +103,7 @@ public class PlanDAO {
 
     public List<Plan> MtListarPlanes() throws Exception {
         List<Plan> lista = new ArrayList<>();
-        String consulta = "Select * from plan";
+        String consulta = "Select * from plan where activo=true";
         try (Connection con = ConexionDB.getConnection(); PreparedStatement ps = con.prepareStatement(consulta); ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 lista.add(MtMapear(rs));

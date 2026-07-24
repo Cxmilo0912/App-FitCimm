@@ -23,8 +23,7 @@ public class SocioDAO {
 
     public List<Socio> MtListar() throws SQLException {
         List<Socio> lista = new ArrayList<>();
-        // Ajusta "membresia m" y "s.id_socio = m.id_socio" según los nombres reales de tus tablas y llaves foráneas
-        String consulta = "SELECT s.nombres, s.apellidos, s.documento, s.telefono, s.email, m.fecha_fin "
+        String consulta = "SELECT s.id_socio, s.nombres, s.apellidos, s.documento, s.telefono, s.correo, m.fecha_fin "
                 + "FROM socio s "
                 + "INNER JOIN membresia m ON s.id_socio = m.id_socio";
 
@@ -101,12 +100,16 @@ public class SocioDAO {
 
         Socio oSocio = new Socio();
 
+        oSocio.setId(rs.getInt("id_socio"));
         oSocio.setDocumento(rs.getString("documento"));
         oSocio.setNombres(rs.getString("nombres"));
         oSocio.setApellidos(rs.getString("apellidos"));
         oSocio.setTelefono(rs.getString("telefono"));
         oSocio.setCorreo(rs.getString("correo"));
-        oSocio.setFechaNacimiento(rs.getObject("fecha_nacimiento", LocalDate.class));
+        if (oSocio.getMembresia() == null) {
+            oSocio.setMembresia(new Membresia());
+        }
+        oSocio.getMembresia().setFechaFin(rs.getObject("fecha_fin", LocalDate.class));
 
         return oSocio;
 

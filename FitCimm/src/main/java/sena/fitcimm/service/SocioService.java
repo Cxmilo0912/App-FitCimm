@@ -58,6 +58,7 @@ public class SocioService {
 
         for (Socio socio : listaSocios) {
             Map<String, Object> map = new HashMap<>();
+            map.put("Id",socio.getId());
             map.put("nombres", socio.getNombres());
             map.put("apellidos", socio.getApellidos());
             map.put("documento", socio.getDocumento());
