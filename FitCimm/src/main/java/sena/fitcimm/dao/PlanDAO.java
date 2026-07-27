@@ -10,7 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import sena.fitcimm.model.Plan;
 import sena.fitcimm.util.ConexionDB;
 
@@ -46,7 +48,7 @@ public class PlanDAO {
 
     }
 
-    public void MtInactivarPlan(boolean estado,int id) throws SQLException {
+    public void MtInactivarPlan(boolean estado, int id) throws SQLException {
         String consulta = "Update plan set activo=? where id_plan=?";
         try (Connection con = ConexionDB.getConnection(); PreparedStatement ps = con.prepareStatement(consulta)) {
             ps.setBoolean(1, estado);
@@ -57,24 +59,30 @@ public class PlanDAO {
 
     }
 
-    public double MtTotalRecaudado(LocalDate fecha1, LocalDate fecha2) throws SQLException {
-        String consulta = "SELECT p.nombre, SUM(m.valor_pagado) AS recaudado"
+    public List<Map<String, Object>> MtTotalRecaudado(LocalDate fecha1, LocalDate fecha2) throws SQLException {
+        String consulta = "SELECT p.nombre,p.valor,SUM(m.valor_pagado) AS recaudado"
                 + " FROM plan p "
                 + " INNER JOIN membresia m ON m.id_plan = p.id_plan"
                 + " WHERE m.fecha_inicio BETWEEN ? AND ?"
                 + " GROUP BY p.nombre";
-        double total = 0;
+        List<Map<String, Object>> lista = new ArrayList<>();
         try (Connection con = ConexionDB.getConnection(); PreparedStatement ps = con.prepareStatement(consulta)) {
             ps.setObject(1, fecha1);
             ps.setObject(2, fecha2);
-         
-            try(ResultSet rs = ps.executeQuery()){
-                if(rs.next()){
-                    total = rs.getDouble("recaudado");
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Map<String, Object> fila = new HashMap<>();
+                    fila.put("nombrePlan", rs.getString("nombre"));
+                    fila.put("valorUnitario", rs.getDouble("valor"));
+                    fila.put("recaudacionTotal", rs.getDouble("recaudado"));
+                    lista.add(fila);
                 }
             }
-            return total;
+           
         }
+        
+   return lista;
 
     }
 
@@ -88,16 +96,12 @@ public class PlanDAO {
                 + "ORDER BY total_vendidos DESC "
                 + "LIMIT 1";
         String Plan = "Sin Ventas";
-        try (Connection con = ConexionDB.getConnection(); PreparedStatement ps = con.prepareStatement(consulta);
-           
-
-            ResultSet rs = ps.executeQuery()){
-              if(rs.next()){
-                    Plan = rs.getString("nombre");
-                }
+        try (Connection con = ConexionDB.getConnection(); PreparedStatement ps = con.prepareStatement(consulta); ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                Plan = rs.getString("nombre");
+            }
         }
         return Plan;
-        
 
     }
 
@@ -110,6 +114,20 @@ public class PlanDAO {
             }
         }
         return lista;
+    }
+
+    public Plan MtListarPlan(int id) throws Exception {
+        Plan plan = null;
+        String consulta = "Select * from plan where id_plan = ?";
+        try (Connection con = ConexionDB.getConnection(); PreparedStatement ps = con.prepareStatement(consulta);) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    plan = MtMapear(rs);
+                }
+            }
+        }
+        return plan;
     }
 
     public Plan MtMapear(ResultSet rs) throws SQLException {
