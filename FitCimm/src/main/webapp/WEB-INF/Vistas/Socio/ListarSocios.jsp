@@ -18,48 +18,9 @@
         <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.dataTables.min.css">   
         <style>
             /* ==========================================================================
-               VARIABLES DE COLOR Y DISEÑO (Soporte Dinámico Claro / Oscuro)
+               VARIABLES DE COLOR Y DISEÑO — solo modo claro
                ========================================================================== */
             :root {
-                /* Valores por defecto (Modo Oscuro Base) */
-                --bg-main: #0b0f19;
-                --bg-surface: #1e293b;
-                --sidebar-bg: #020617;
-                --sidebar-hover: #1e293b;
-
-                --primary: #2563eb;
-                --primary-hover: #1d4ed8;
-                --primary-light: rgba(30, 58, 95, 0.5);
-                --primary-border: #334155;
-
-                --text-main: #f1f5f9;
-                --text-muted: #94a3b8;
-                --text-white: #ffffff;
-
-                --border-color: #334155;
-                --border-focus: #3b82f6;
-
-                --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
-                --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4);
-                --radius: 10px;
-            }
-
-            html {
-                background-color: var(--bg-main);
-                height: 100%;
-            }
-
-            body {
-                font-family: 'Plus Jakarta Sans', sans-serif;
-                background-color: var(--bg-main);
-                color: var(--text-main);
-                display: flex;
-                height: 100vh;
-                overflow: hidden;
-                transition: background-color 0.3s ease, color 0.3s ease;
-            }
-            /* Si el body tiene la clase light-mode, cambiamos las variables a tonos claros */
-            body.light-mode {
                 --bg-main: #f8fafc;
                 --bg-surface: #ffffff;
                 --sidebar-bg: #0f172a;
@@ -79,6 +40,12 @@
 
                 --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
                 --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+                --radius: 10px;
+            }
+
+            html {
+                background-color: var(--bg-main);
+                height: 100%;
             }
 
             /* Reset básico */
@@ -95,7 +62,6 @@
                 display: flex;
                 height: 100vh;
                 overflow: hidden;
-                transition: background-color 0.3s ease, color 0.3s ease;
             }
 
             /* ==========================================================================
@@ -185,7 +151,6 @@
                 align-items: center;
                 justify-content: space-between;
                 padding: 0 32px;
-                transition: background-color 0.3s ease, border-color 0.3s ease;
             }
 
             .page-title-sm {
@@ -282,7 +247,6 @@
                 border-radius: var(--radius);
                 border: 1px solid var(--border-color);
                 box-shadow: var(--shadow-sm);
-                transition: background-color 0.3s ease, border-color 0.3s ease;
             }
 
             .search-input-wrapper {
@@ -308,7 +272,7 @@
                 border: 1px solid var(--border-color);
                 border-radius: var(--radius);
                 outline: none;
-                transition: border 0.2s, background-color 0.3s ease, color 0.3s ease;
+                transition: border 0.2s;
             }
 
             .search-input:focus {
@@ -325,7 +289,6 @@
                 border: 1px solid var(--border-color);
                 box-shadow: var(--shadow-sm);
                 overflow: hidden;
-                transition: background-color 0.3s ease, border-color 0.3s ease;
             }
 
             .table-wrapper {
@@ -385,7 +348,7 @@
             }
 
             /* ==========================================================================
-               ESTILOS PARA LOS BADGES DE ESTADO DE MEMBRESÍA
+               ESTILOS PARA LOS BADGES DE ESTADO DE MEMBRESÍA — solo modo claro
                ========================================================================== */
             .badge {
                 display: inline-flex;
@@ -398,31 +361,20 @@
             }
 
             .bg-success {
-                background-color: rgba(22, 101, 52, 0.2);
-                color: #4ade80;
-            }
-            body.light-mode .bg-success {
                 background-color: #dcfce7;
                 color: #166534;
             }
 
             .bg-warning {
-                background-color: rgba(133, 77, 14, 0.2);
-                color: #facc15;
-            }
-            body.light-mode .bg-warning {
                 background-color: #fef9c3;
                 color: #854d0e;
             }
 
             .bg-danger {
-                background-color: rgba(153, 27, 27, 0.2);
-                color: #f87171;
-            }
-            body.light-mode .bg-danger {
                 background-color: #fee2e2;
                 color: #991b1b;
             }
+
             .btn-action {
                 background: transparent;       /* Quita el fondo gris por defecto */
                 border: 1px solid transparent; /* O un borde sutil si lo deseas */
@@ -574,19 +526,14 @@
 
         <jsp:include page="/WEB-INF/Vistas/Menu.jsp"/>
 
-        <c:if test="${not empty error}">
+        <c:if test="${not empty errorMsg}">
             <div style="background: #fee2e2; color: #991b1b; padding: 12px; border-radius: 8px; margin-bottom: 16px;">
-                <strong>Error:</strong> ${error}
+                <strong>Error:</strong> ${errorMsg}
             </div>
         </c:if>
 
         <!-- Contenedor Principal -->
         <div class="main-wrapper">
-
-            <!-- Barra Superior -->
-            <header class="top-header">
-                <div class="page-title-sm">Gestión de Socios</div>
-            </header>
 
             <!-- Canvas de Contenido -->
             <main class="content-container">
@@ -678,6 +625,13 @@
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </form>
+                                                <form action="SocioController" method="GET">
+                                                    <input type="hidden" name="action" value="historial">
+                                                    <input type="hidden" name="idHistorial" value="${item.Id}">
+                                                    <button type="submit" class="btn-action" title="Historial de Membresias"> 
+                                                        <span class="material-symbols-outlined" style="font-size: 18px; color: blue;">history</span>    
+                                                    </button>
+                                                </form>
                                             </div>
                                         </td>
                                     </tr>
@@ -692,6 +646,7 @@
                     </div>
                 </div>
 
+                <!-- Modal Editar -->
                 <div id="modalEditar" class="modal-overlay">
                     <div class="modal-card">
                         <form action="SocioController?action=actualizar" method="POST">
@@ -733,11 +688,65 @@
                                 </div>
                             </div>
 
+
                             <div class="modal-footer">
                                 <button type="button" class="btn-secondary" onclick="cerrarModalEditar()">Cancelar</button>
                                 <button type="submit" class="btn-primary">Guardar Cambios</button>
                             </div>
                         </form>
+                    </div>
+                </div>
+
+                <!-- Modal Historial -->
+                <div id="modalHistorial" class="modal-overlay">
+                    <div class="modal-card" style="max-width: 700px;"> <!-- Un poco más ancho para que la tabla respire bien -->
+
+                        <div class="modal-header">
+                            <h3>Historial de Membresías</h3>
+                            <button type="button" class="btn-secondary" style="padding: 4px 8px;" onclick="cerrarModalHistorial()">
+                                <span class="material-symbols-outlined" style="font-size: 18px; vertical-align: middle;">close</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+                            <!-- Contenedor con scroll por si el socio tiene muchas membresías registradas -->
+                            <div style="max-height: 400px; overflow-y: auto;">
+                                <table class="table" style="width: 100%; border-collapse: collapse; text-align: left;">
+                                    <thead>
+                                        <tr style="border-bottom: 2px solid #e0e0e0;">
+                                            <th style="padding: 10px;">Nombre del Socio</th>
+                                            <th style="padding: 10px;">Plan</th>
+                                            <th style="padding: 10px;">Estado</th>
+                                            <th style="padding: 10px;">Fecha Inicio</th>
+                                            <th style="padding: 10px;">Fecha Fin</th>
+                                            <th style="padding: 10px;">Valor Pagado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Recorremos la lista que mandaste desde el Servlet con JSTL -->
+                                        <c:forEach var="h" items="${historialMembresias}">
+                                            <tr style="border-bottom: 1px solid #f0f0f0;">
+                                                <td style="padding: 10px;">${h.nombresSocio}</td>
+                                                <td style="padding: 10px;">${h.nombrePlan}</td>
+                                                <td style="padding: 10px;">
+                                                    <!-- Opcional: una etiqueta dinámica para el estado -->
+                                                    <span class="badge ${h.estadoMembresia == 'ACTIVA' ? 'badge-success' : 'badge-secondary'}">
+                                                        ${h.estadoMembresia}
+                                                    </span>
+                                                </td>
+                                                <td style="padding: 10px;">${h.fechaInicio}</td>
+                                                <td style="padding: 10px;">${h.fechaFin}</td>
+                                                <td style="padding: 10px;">$ ${h.valorPagado}</td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn-primary" onclick="cerrarModalHistorial()">Cerrar</button>
+                        </div>
                     </div>
                 </div>
 
@@ -750,62 +759,85 @@
         <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
 
         <script>
-                                    $(document).ready(function () {
-                                        var table;
-                                        table = $('#socioTabla').DataTable({
-                                            "searching": true, // Lo activamos para que el motor procese los filtros
-                                            "dom": 'rtip',
-                                            scrollY: true, // Altura máxima para el scroll vertical
-                                            scrollCollapse: true,
-                                            responsive: true,
-                                            language: {
-                                                processing: "Procesando...",
-                                                search: "Buscar:",
-                                                lengthMenu: "Mostrar _MENU_ registros",
-                                                info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                                                infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
-                                                infoFiltered: "(filtrado de un total de _MAX_ registros)",
-                                                infoPostFix: "",
-                                                loadingRecords: "Cargando...",
-                                                zeroRecords: "No se encontraron resultados",
-                                                emptyTable: "Ningún dato disponible en esta tabla",
-                                                paginate: {
-                                                    first: "Primero",
-                                                    previous: "Anterior",
-                                                    next: "Siguiente",
-                                                    last: "Último"
-                                                },
-                                                aria: {
-                                                    sortAscending: ": Activar para ordenar la columna de manera ascendente",
-                                                    sortDescending: ": Activar para ordenar la columna de manera descendente"
-                                                }
+                                $(document).ready(function () {
+                                    var table;
+                                    table = $('#socioTabla').DataTable({
+                                        "searching": true, // Lo activamos para que el motor procese los filtros
+                                        "dom": 'rtip',
+                                        scrollY: "400px", // Altura máxima para el scroll vertical
+                                        scrollCollapse: true,
+                                        responsive: true,
+                                        language: {
+                                            processing: "Procesando...",
+                                            search: "Buscar:",
+                                            lengthMenu: "Mostrar _MENU_ registros",
+                                            info: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                                            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                                            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+                                            infoPostFix: "",
+                                            loadingRecords: "Cargando...",
+                                            zeroRecords: "No se encontraron resultados",
+                                            emptyTable: "Ningún dato disponible en esta tabla",
+                                            paginate: {
+                                                first: "Primero",
+                                                previous: "Anterior",
+                                                next: "Siguiente",
+                                                last: "Último"
                                             },
-                                            order: [[0, 'desc']]
-                                        });
-
-                                        $('.search-input').on('keyup', function () {
-                                            table.search(this.value).draw();
-                                        });
+                                            aria: {
+                                                sortAscending: ": Activar para ordenar la columna de manera ascendente",
+                                                sortDescending: ": Activar para ordenar la columna de manera descendente"
+                                            }
+                                        },
+                                        order: [[0, 'desc']]
                                     });
 
+                                    $('.search-input').on('keyup', function () {
+                                        table.search(this.value).draw();
+                                    });
+                                });
 
-                                    function abrirModalEditar(Id, documento, nombres, apellidos, fecha_nacimiento, telefono, email) {
-                                        document.getElementById('edit_id').value = Id;
-                                        document.getElementById('edit_document').value = documento;
-                                        document.getElementById('edit_names').value = nombres;
-                                        document.getElementById('edit_lastnames').value = apellidos;
-                                        document.getElementById('edit_date').value = fecha_nacimiento;
-                                        document.getElementById('edit_cellnumber').value = telefono;
-                                        document.getElementById('edit_email').value = email;
 
-                                        document.getElementById('modalEditar').style.display = 'flex';
-                                    }
+                                function abrirModalEditar(Id, documento, nombres, apellidos, fecha_nacimiento, telefono, email) {
+                                    document.getElementById('edit_id').value = Id;
+                                    document.getElementById('edit_document').value = documento;
+                                    document.getElementById('edit_names').value = nombres;
+                                    document.getElementById('edit_lastnames').value = apellidos;
+                                    document.getElementById('edit_date').value = fecha_nacimiento;
+                                    document.getElementById('edit_cellnumber').value = telefono;
+                                    document.getElementById('edit_email').value = email;
 
-                                    function cerrarModalEditar() {
-                                        document.getElementById('modalEditar').style.display = 'none';
-                                    }
+                                    document.getElementById('modalEditar').style.display = 'flex';
+                                }
+
+                                function cerrarModalEditar() {
+                                    document.getElementById('modalEditar').style.display = 'none';
+                                }
 
         </script>
+
+        <c:if test="${abrirModalHistorial}">
+            <script>
+                function abrirModalHistorial() {
+                    let modal = document.getElementById('modalHistorial');
+                    if (modal) {
+                        modal.style.display = 'flex';
+                    }
+                }
+
+                function cerrarModalHistorial() {
+                    let modal = document.getElementById('modalHistorial');
+                    if (modal) {
+                        modal.style.display = 'none';
+                    }
+                }
+
+                // ¡ESTO ES LO QUE FALTABA! Ejecutar la función automáticamente al cargar la página
+                window.addEventListener('DOMContentLoaded', () => {
+                    abrirModalHistorial();
+                });
+            </script>
+        </c:if>
 
     </body>
 </html>

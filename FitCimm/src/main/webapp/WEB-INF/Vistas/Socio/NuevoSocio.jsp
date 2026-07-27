@@ -373,25 +373,12 @@
 
         <!-- Contenedor Principal -->
         <div class="main-wrapper">
-
-            <!-- Barra Superior -->
-            <header class="top-header">
-                <div class="header-title">Gestión de Socios</div>
-
-                <div class="header-actions">
-                    <button class="icon-btn" title="Notificaciones">
-                        <span class="material-symbols-outlined">notifications</span>
-                    </button>
-                    <img class="profile-avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnZawZHMJvj90LAZ9WYwbZO1VbyGqHHAv31Bm8s0oc8BH28zVmBnOdspAMrV9CNX5hsZoVhCl2allcWren7IsaaK9i2JgJuVs_ZbG_lJtPrwFJ8XDWSEC3kuINSEbRiD3r7dkCJ3VrzbAduEJCI8qB8GWPiqc7JlzEEadrhOz8fk7FeBz1SIBfNGTgHVnlQtjQubeXGMhNUnriMKEO4f2CXUlc17DBeFNj2maGnDQm-gA335PKMihg4MZeNlxlT4kwa9P_qroovO7o" alt="Avatar Admin"/>
-                </div>
-            </header>
-
             <!-- Canvas de Contenido -->
             <main class="content-container">
 
                 <!-- Link de retorno -->
                 <div>
-                    <a class="back-link" href="#">
+                    <a class="back-link" href="${pageContext.request.contextPath}/SocioController?action=listar">
                         <span class="material-symbols-outlined">arrow_back</span>
                         Volver al Listado
                     </a>
@@ -445,7 +432,7 @@
 
                         <!-- Acciones -->
                         <div class="form-actions">
-                            <button class="btn-secondary" type="button">Cancelar</button>
+                            <a class="btn-secondary" href="${pageContext.request.contextPath}/SocioController?action=listar">Cancelar</a>
                             <button class="btn-primary" type="submit">Guardar Socio</button>
                         </div>
                     </form>

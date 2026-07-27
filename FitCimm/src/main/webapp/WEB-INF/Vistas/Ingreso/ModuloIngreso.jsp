@@ -705,7 +705,6 @@
                 filter: blur(4px);
             }
         </style>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme.css"/>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="${pageContext.request.contextPath}/js/sweetAlert.js"></script>
     </head>
@@ -755,7 +754,7 @@
                 <!-- Filtro de Fecha para la Tabla -->
                 <div class="mb-6 flex items-center gap-4">
                     <form action="${pageContext.request.contextPath}/IngresoController" method="GET" class="flex items-center gap-3">
-                        <label for="fechaConsulta" class="text-sm font-semibold text-slate-700 dark:text-slate-300">Consultar fecha:</label>
+                        <label for="fechaConsulta" class="text-sm font-semibold text-slate-700 ">Consultar fecha:</label>
                         <input type="date" id="fechaConsulta" name="fechaConsulta"
                                class="px-3 py-2 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-800 dark:text-slate-200 text-sm">
                         <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-bold transition-all">
@@ -951,8 +950,6 @@
             });
         </script>
         <%}%>
-
-        <script src="${pageContext.request.contextPath}/js/theme.js"></script>
 
     </body>
 </html>

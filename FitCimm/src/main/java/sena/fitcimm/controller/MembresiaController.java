@@ -108,7 +108,6 @@ public class MembresiaController extends HttpServlet {
                 String mensaje = oMembresia.MtVender(idSocio, oplan, valorPagado, fechaInicio);
                 request.getSession().setAttribute("success", mensaje);
                   response.sendRedirect(request.getContextPath() + "/MembresiaController?accion=nuevo");
-                
                 return;
             } catch (Exception e) {
                 request.getSession().setAttribute("error", e.getMessage());
