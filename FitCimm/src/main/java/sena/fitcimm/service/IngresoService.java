@@ -49,7 +49,7 @@ public class IngresoService {
         }
 
         //Verificar Socio activo
-        if (oSocio.isActivo()) {
+        if (oSocio.isActivo() == false) {
             throw new Exception("El socio no puede ingresar debido a que se encuentra inactivo");
         }
 

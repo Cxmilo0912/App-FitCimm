@@ -704,25 +704,15 @@
             .blur-sm {
                 filter: blur(4px);
             }
-            .material-symbols-outlined {
-                font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-            }
         </style>
-        <script>
-            (function () {
-                const savedTheme = localStorage.getItem('theme');
-                const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
-                    document.documentElement.classList.add('dark');
-                }
-            })();
-        </script>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme.css"/>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="${pageContext.request.contextPath}/js/sweetAlert.js"></script>
     </head>
 
     <body>
+
+        <jsp:include page="/WEB-INF/Vistas/Menu.jsp"/>
 
         <!-- Contenedor Principal -->
         <div class="main-wrapper">

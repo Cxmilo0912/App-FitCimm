@@ -21,6 +21,7 @@ import sena.fitcimm.model.*;
 public class MembresiaService {
 
     private MembresiaDAO dao = new MembresiaDAO();
+    private Membresia membresia = new Membresia();
 
     public void MtVender(int idSocio, Plan plan, double valor, LocalDate fechaInicio) throws Exception {
 
@@ -52,7 +53,6 @@ public class MembresiaService {
         oMembresia.setFechaInicio(inicio);
         oMembresia.setValorPagado(valor);
         dao.MtInsertarMembresia(oMembresia);
-
     }
 
     public void MtRenovar(int idSocio, Plan plan, double valor, LocalDate fechaInicio) throws Exception {
