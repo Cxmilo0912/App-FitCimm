@@ -149,6 +149,26 @@
         border: 1px solid var(--sidebar-border);
         color: #94a3b8;
     }
+
+    .icon-btn {
+        background: transparent;
+        border: 1px solid #e2e8f0;
+        color: var(--text-muted);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .icon-btn:hover {
+        background-color: var(--primary-light);
+        color: var(--primary);
+        border-color: var(--primary-border);
+    }
 </style>
 
 <!-- 2. ESTRUCTURA HTML -->
@@ -195,8 +215,8 @@
             </a>
 
             <a href="${pageContext.request.contextPath}/IngresoController" class="nav-item">
-                <span class="material-symbols-outlined">payments</span>
-                <span>Ingresos</span>
+                <span class="material-symbols-outlined">login</span>
+                <span>Ingreso de Socios</span>
             </a>
         </nav>  
     </div>

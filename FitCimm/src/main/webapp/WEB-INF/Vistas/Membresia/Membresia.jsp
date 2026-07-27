@@ -57,16 +57,6 @@
                 overflow: hidden;
             }
 
-            /* BARRA LATERAL (Sidebar) */
-            .sidebar {
-                width: 260px;
-                background-color: var(--sidebar-bg);
-                display: flex;
-                flex-direction: column;
-                padding: 24px 16px;
-                flex-shrink: 0;
-            }
-
             .brand {
                 padding: 0 12px 24px 12px;
                 border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -89,40 +79,6 @@
                 margin-top: 4px;
             }
 
-            .nav-menu {
-                display: flex;
-                flex-direction: column;
-                gap: 6px;
-                flex: 1;
-            }
-
-            .nav-item {
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                padding: 12px 16px;
-                color: #94a3b8;
-                text-decoration: none;
-                font-size: 14px;
-                font-weight: 500;
-                border-radius: var(--radius);
-                transition: all 0.2s ease;
-            }
-
-            .nav-item:hover {
-                background-color: var(--sidebar-hover);
-                color: var(--text-white);
-            }
-
-            .nav-item.active {
-                background-color: var(--primary);
-                color: var(--text-white);
-                box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-            }
-
-            .nav-item.logout {
-                margin-top: auto;
-            }
 
             /* ESTRUCTURA PRINCIPAL Y HEADER */
             .main-wrapper {
@@ -446,7 +402,7 @@
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
         <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
-          <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="${pageContext.request.contextPath}/js/sweetAlert.js"></script>
     </head>
 
@@ -541,7 +497,7 @@
                         <input type="hidden" name="accion" value="renovar"/>
                         <input type="hidden" name="id" id="renovarDocumento"/>
 
-                  
+
                         <div class="form-group">
                             <label>Socio</label>
                             <input type="text" class="form-control" id="renovarNombreSocio" disabled/>
@@ -583,6 +539,8 @@
         <script>
             $(document).ready(function () {
                 $('#tablaMembresias').DataTable({
+                    paging: true,
+
                     language: {
                         url: 'https://cdn.datatables.net/plug-ins/1.13.8/i18n/es-ES.json'
                     }
@@ -602,10 +560,10 @@
                 document.getElementById('formRenovar').reset();
             }
 
-           
-            
+
+
         </script>
-         <%
+        <%
             String error = (String) request.getAttribute("error");
             String success = (String) request.getAttribute("success");
             if (error != null && !error.isEmpty()) {

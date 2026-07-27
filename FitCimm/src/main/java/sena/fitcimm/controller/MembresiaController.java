@@ -102,7 +102,7 @@ public class MembresiaController extends HttpServlet {
 
                 oMembresia.MtVender(idSocio, oplan, valorPagado, fechaInicio);
                 request.setAttribute("success", "la membresia se ha registado correctamente");
-                request.getRequestDispatcher("WEB-INF/Vistas/Plan/CrearMembresia.jsp").forward(request, response);
+                request.getRequestDispatcher("WEB-INF/Vistas/Membresia/CrearMembresia.jsp").forward(request, response);
                 return;
             } catch (Exception e) {
                 request.getSession().setAttribute("error", e.getMessage());
