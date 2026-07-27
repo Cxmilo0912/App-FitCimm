@@ -495,7 +495,7 @@
 
                         <!-- Botones de Acción -->
                         <div class="form-actions">
-                            <button type="button" class="btn-secondary">Cancelar</button>
+                            <a href="${pageContext.request.contextPath}/PlanController?accion=gestion" class="btn-secondary">Cancelar</a>
                             <button type="submit" class="btn-primary">
                                 <span class="material-symbols-outlined" style="font-size: 18px;">save</span>
                                 Guardar Plan

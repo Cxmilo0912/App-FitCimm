@@ -307,6 +307,13 @@
                 color: #991b1b;
                 border: 1px solid #fecaca;
             }
+            
+            .badge-porvencer {
+                background-color: #fef3c7;
+                color: #92400e;
+                border: 1px solid #fde68a;
+            }
+            
 
             /* BOTÓN RENOVACIÓN */
             .btn-renew {
@@ -503,7 +510,7 @@
                                                     <span class="badge badge-vencida">Vencida</span>
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <span class="badge">${m.estadoMembresia}</span>
+                                                    <span class="badge badge-porvencer">${m.estadoMembresia}</span>
                                                 </c:otherwise>
                                             </c:choose>   
                                         </td>

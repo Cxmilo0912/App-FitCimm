@@ -23,22 +23,35 @@ public class MembresiaService {
     private MembresiaDAO dao = new MembresiaDAO();
     private Membresia membresia = new Membresia();
 
-    public void MtVender(int idSocio, Plan plan, double valor, LocalDate fechaInicio) throws Exception {
+    public String MtVender(int idSocio, Plan plan, double valor, LocalDate fechaInicio) throws Exception {
 
         List<Socio> listaMembresias = dao.MtListarMembresias();
 
         EstadoMembresia estado = null;
+         LocalDate fechainicio = null;
 
         for (Socio socio : listaMembresias) {
             if (socio.getId() == idSocio && socio.getMembresia() != null) {
                 estado = MTCalcularEstado(socio.getMembresia());
-                break;
+                fechainicio= socio.getMembresia().getFechaFin().plusDays(1);
+                        
+                        break;
             }
         }
 
-        if (estado != null) {
+        if (estado != null && fechainicio != null) {
             if (estado == EstadoMembresia.VIGENTE || estado == EstadoMembresia.POR_VENCER) {
-                throw new Exception("¡Alerta! El socio ya cuenta con una membresía " + estado + ". No se puede registrar otra hasta que finalice.");
+                
+                LocalDate fin = fechainicio.plusDays(plan.getDuracionDias());
+                Membresia oMembresia = new Membresia();
+                oMembresia.setIdSocio(idSocio);
+                oMembresia.setIdPlan(plan.getId());
+                oMembresia.setFechaFin(fin);
+                oMembresia.setFechaInicio(fechainicio);
+                oMembresia.setValorPagado(valor);
+                dao.MtInsertarMembresia(oMembresia);
+
+               return "¡Membresía registrada con éxito! Como el socio ya contaba con una membresía " + estado + ", esta nueva membresía comenzará el " + fechainicio + " (al día siguiente de finalizar la anterior).";
             } else if (estado == EstadoMembresia.VENCIDA) {
                 throw new Exception("¡Alerta! El socio ya cuenta con una membresía " + estado + "Renueve la membresia actual.");
             }
@@ -53,6 +66,7 @@ public class MembresiaService {
         oMembresia.setFechaInicio(inicio);
         oMembresia.setValorPagado(valor);
         dao.MtInsertarMembresia(oMembresia);
+        return "la membresia se ha registrado correctamente";
     }
 
     public void MtRenovar(int idSocio, Plan plan, double valor, LocalDate fechaInicio) throws Exception {
