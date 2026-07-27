@@ -1,6 +1,6 @@
-============================================================
-  Sistema de Gestión de Gimnasio «FitCIMM»
-============================================================
+
+# Sistema de Gestión de Gimnasio «FitCIMM»
+
 
 **Proyecto:** FitCIMM  
 **Institución:** SENA — Centro Industrial de Mantenimiento y Manufactura (CIMM)  
