@@ -23,18 +23,29 @@ public class Membresia {
     private LocalDate FechaFin;
 
     private double ValorPagado;
+    
+    private Plan plan;
+
+    public Plan getPlan() {
+        return plan;
+    }
+
+    public void setPlan(Plan plan) {
+        this.plan = plan;
+    }
 
 
     public Membresia() {
     }
 
-    public Membresia(int Id, int IdSocio, int IdPlan, LocalDate FechaInicio, LocalDate FechaFin, double ValorPagado) {
+    public Membresia(int Id, int IdSocio, int IdPlan, LocalDate FechaInicio, LocalDate FechaFin, double ValorPagado,Plan plan) {
         this.Id = Id;
         this.IdSocio = IdSocio;
         this.IdPlan = IdPlan;
         this.FechaInicio = FechaInicio;
         this.FechaFin = FechaFin;
         this.ValorPagado = ValorPagado;
+        this.plan = plan;
     }
 
     public int getId() {

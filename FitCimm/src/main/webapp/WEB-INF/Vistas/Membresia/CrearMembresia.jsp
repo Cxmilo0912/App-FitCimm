@@ -81,6 +81,8 @@
                 letter-spacing: -0.02em;
             }
 
+
+
             .brand-subtitle {
                 font-family: 'JetBrains Mono', monospace;
                 font-size: 11px;
@@ -408,6 +410,8 @@
                 box-shadow: 0 4px 10px rgba(37, 99, 235, 0.35);
             }
         </style>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="${pageContext.request.contextPath}/js/sweetAlert.js"></script>
     </head>
 
     <body>
@@ -427,7 +431,7 @@
             <main class="content-container">
 
                 <div>
-                    <a class="back-link" href="listaMembresias.html">
+                    <a class="back-link" href="${pageContext.request.contextPath}/MembresiaController?accion=menu">
                         <span class="material-symbols-outlined">arrow_back</span>
                         Volver al Listado
                     </a>
@@ -440,16 +444,16 @@
                         <p id="formSubheading">Seleccione un socio y asigne un plan comercial con cálculo automático de vigencia.</p>
                     </div>
 
-                    <form class="form-grid" id="membershipForm" onsubmit="event.preventDefault(); alert('¡Operación realizada con éxito!'); window.location.href = 'listaMembresias.html';">
+                    <form class="form-grid" id="membershipForm" action="MembresiaController?accion=registrar" method="POST">
 
                         <!-- Selección de Socio -->
                         <div class="field-group full-width">
                             <label class="input-label" for="selectSocio">Seleccionar Socio</label>
 
-                            <select class="input-control" id="selectSocio" required>
+                            <select class="input-control" id="selectSocio" name="idSocio" required>
                                 <option value="" disabled selected>-- Seleccione un socio registrado --</option>
                                 <c:forEach var="s" items="${socios}">
-                                    <option value="${s.Id}">${s.documento} - ${s.nombres} ${s.apellidos}</option>
+                                    <option  value="${s.id}">${s.documento} - ${s.nombres} ${s.apellidos}</option>
                                 </c:forEach>
 
                             </select>
@@ -460,55 +464,39 @@
                         <div class="field-group full-width">
                             <label class="input-label">Plan Comercial</label>
                             <div class="plans-container">
-                                <label class="plan-card">
-                                    <div>
-                                        <div class="plan-top">
-                                            <span class="plan-name">Mensual</span>
-                                            <input type="radio" name="plan" value="1" data-duration="1" onchange="calcularFechas()" required>
+                                <c:forEach var="p" items="${planes}">
+                                    <label class="plan-card">
+                                        <div>
+                                            <div class="plan-top">
+                                                <span class="plan-name">${p.nombre}</span>
+                                                <input type="radio" name="plan" value="${p.id}"  required>
+                                            </div>
+                                            <div class="plan-price">$ ${p.valor}</div>
                                         </div>
-                                        <div class="plan-price">$20.000</div>
-                                    </div>
-                                    <span class="plan-duration">1 Mes de vigencia</span>
-                                </label>
 
-                                <label class="plan-card">
-                                    <div>
-                                        <div class="plan-top">
-                                            <span class="plan-name">Trimestral</span>
-                                            <input type="radio" name="plan" value="3" data-duration="3" onchange="calcularFechas()">
-                                        </div>
-                                        <div class="plan-price">$60.000</div>
-                                    </div>
-                                    <span class="plan-duration">3 Meses de vigencia</span>
-                                </label>
+                                        <span class="plan-duration" name="duracion">${p.duracionDias} dias de vigencia</span>
+                                    </label>
+                                </c:forEach>
 
-                                <label class="plan-card">
-                                    <div>
-                                        <div class="plan-top">
-                                            <span class="plan-name">Anual</span>
-                                            <input type="radio" name="plan" value="12" data-duration="12" onchange="calcularFechas()">
-                                        </div>
-                                        <div class="plan-price">$180.000</div>
-                                    </div>
-                                    <span class="plan-duration">12 Meses de vigencia</span>
-                                </label>
+
                             </div>
                         </div>
 
                         <!-- Fechas de Inicio y Fin -->
                         <div class="field-group">
                             <label class="input-label" for="fechaInicio">Fecha de Inicio</label>
-                            <input class="input-control mono" id="fechaInicio" type="date" onchange="calcularFechas()" required />
+                            <input name="fechaInicio" class="input-control mono" id="fechaInicio" type="date"  required />
                         </div>
 
                         <div class="field-group">
-                            <label class="input-label" for="fechaFin" style="color: var(--primary);">Fecha de Fin (Automática)</label>
-                            <input class="input-control mono date-readonly" id="fechaFin" type="date" readonly />
+                            <label class="input-label" for="valorpagado">Valor Pagado</label>
+                            <input type="number" name="valorpagado" step="0.01" class="input-control mono"
+                                   placeholder="999.00" />
                         </div>
 
                         <!-- Acciones -->
                         <div class="form-actions">
-                            <button class="btn-secondary" type="button" onclick="window.location.href = 'listaMembresias.html';">Cancelar</button>
+
                             <button class="btn-primary" id="btnSubmit" type="submit">Guardar Membresía</button>
                         </div>
                     </form>
@@ -516,36 +504,27 @@
 
             </main>
         </div>
-
-
+         <%
+            String error = (String) request.getAttribute("error");
+            String success = (String) request.getAttribute("success");
+            if (error != null && !error.isEmpty()) {
+        %>
         <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                // Fecha actual por defecto
-                const hoy = new Date().toISOString().split('T')[0];
-                document.getElementById('fechaInicio').value = hoy;
-
-                // Leer parámetros URL
-                const urlParams = new URLSearchParams(window.location.search);
-                const accion = urlParams.get('accion');
-                const socioParam = urlParams.get('socio');
-
-                if (accion === 'renovar') {
-                    document.getElementById('pageTitle').innerText = "Renovar Membresía - Partner Manager";
-                    document.getElementById('headerTitleTop').innerText = "Renovación de Membresía";
-                    document.getElementById('formHeading').innerText = "Renovar Membresía de Socio";
-                    document.getElementById('formSubheading').innerText = "Actualice el plan y extienda la vigencia del socio seleccionado.";
-                    document.getElementById('btnSubmit').innerText = "Confirmar Renovación";
-
-                    if (socioParam) {
-                        const selectSocio = document.getElementById('selectSocio');
-                        selectSocio.value = socioParam;
-                        selectSocio.setAttribute('disabled', 'true');
-                    }
-                }
+            window.addEventListener('DOMContentLoaded', () => {
+                sweetAlert.error("¡Error!", "<%= error%>");
             });
-
-
         </script>
+        <%
+        } else if (success != null && !success.isEmpty()) {
+        %>
+        <script>
+            window.addEventListener('DOMContentLoaded', () => {
+                sweetAlert.success("Éxito", "<%= success%>");
+            });
+        </script>
+        <%
+            }
+        %>
 
     </body>
 </html>

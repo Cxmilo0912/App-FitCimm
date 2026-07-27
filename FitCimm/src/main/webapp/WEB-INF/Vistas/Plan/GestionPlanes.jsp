@@ -328,6 +328,8 @@
                 background-color: #f1f5f9;
             }
         </style>
+         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="${pageContext.request.contextPath}/js/sweetAlert.js"></script>
     </head>
 
     <body>
@@ -410,7 +412,7 @@
             <div class="modal-card">
                 <form action="PlanController?accion=actualizar" method="POST">
 
-                 
+
 
                     <input type="hidden" id="edit_id" name="id">
 
@@ -458,5 +460,26 @@
                 document.getElementById('modalEditar').style.display = 'none';
             }
         </script>
+        <%
+            String error = (String) request.getAttribute("error");
+            String success = (String) request.getAttribute("success");
+            if (error != null && !error.isEmpty()) {
+        %>
+        <script>
+            window.addEventListener('DOMContentLoaded', () => {
+                sweetAlert.error("¡Error!", "<%= error%>");
+            });
+        </script>
+        <%
+        } else if (success != null && !success.isEmpty()) {
+        %>
+        <script>
+            window.addEventListener('DOMContentLoaded', () => {
+                sweetAlert.success("Éxito", "<%= success%>");
+            });
+        </script>
+        <%
+            }
+        %>
     </body>
 </html>

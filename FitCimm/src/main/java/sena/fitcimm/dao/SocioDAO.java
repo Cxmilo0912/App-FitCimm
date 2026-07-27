@@ -36,6 +36,22 @@ public class SocioDAO {
 
         return lista;
     }
+    
+    public List<Socio> MtListarSocios() throws SQLException {
+        List<Socio> lista = new ArrayList<>();
+        String consulta = "SELECT s.id_socio, s.nombres, s.apellidos, s.documento, s.telefono, s.correo "
+                + "FROM socio s ";
+           
+
+        try (Connection cn = ConexionDB.getConnection(); PreparedStatement ps = cn.prepareStatement(consulta); ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                lista.add(MtMapearSocio(rs));
+            }
+        }
+
+        return lista;
+    }
 
     public void MtInsertarSocio(Socio oSocio) throws SQLException {
 
@@ -111,6 +127,21 @@ public class SocioDAO {
         }
         oSocio.getMembresia().setFechaFin(rs.getObject("fecha_fin", LocalDate.class));
 
+        return oSocio;
+
+    }
+    
+    private Socio MtMapearSocio(ResultSet rs) throws SQLException {
+
+        Socio oSocio = new Socio();
+
+        oSocio.setId(rs.getInt("id_socio"));
+        oSocio.setDocumento(rs.getString("documento"));
+        oSocio.setNombres(rs.getString("nombres"));
+        oSocio.setApellidos(rs.getString("apellidos"));
+        oSocio.setTelefono(rs.getString("telefono"));
+        oSocio.setCorreo(rs.getString("correo"));
+     
         return oSocio;
 
     }

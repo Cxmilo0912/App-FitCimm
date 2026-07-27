@@ -6,6 +6,7 @@ package sena.fitcimm.service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import sena.fitcimm.dao.PlanDAO;
 import sena.fitcimm.model.Plan;
 
@@ -42,7 +43,7 @@ public class PlanService {
         dao.MtInactivarPlan(estado,id);
     }
     
-    public double MtTotalRecaudo(LocalDate fecha1, LocalDate fecha2) throws Exception {
+    public List<Map<String, Object>> MtTotalRecaudo(LocalDate fecha1, LocalDate fecha2) throws Exception {
         return dao.MtTotalRecaudado(fecha1,fecha2);
     }
     
@@ -52,5 +53,9 @@ public class PlanService {
      
      public List<Plan> MtListarPlanes() throws Exception {
          return dao.MtListarPlanes();
+     }
+     
+      public Plan MtListarPlan(int id) throws Exception {
+         return dao.MtListarPlan(id);
      }
 }

@@ -184,7 +184,7 @@
                 <span>Membresías</span>
             </a>
 
-            <a href="${pageContext.request.contextPath}/PlanController?accion=reportes" class="nav-item">
+            <a href="${pageContext.request.contextPath}/PlanController?accion=reporte" class="nav-item">
                 <span class="material-symbols-outlined">bar_chart</span>
                 <span>Reportes</span>
             </a>
