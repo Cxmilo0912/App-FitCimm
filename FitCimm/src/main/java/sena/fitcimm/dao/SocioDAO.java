@@ -23,7 +23,7 @@ public class SocioDAO {
 
     public List<Socio> MtListar() throws SQLException {
         List<Socio> lista = new ArrayList<>();
-        String consulta = "SELECT s.id_socio, s.nombres, s.apellidos, s.documento, s.telefono, s.correo, m.fecha_fin "
+        String consulta = "SELECT s.id_socio, s.nombres, s.apellidos, s.documento, s.telefono, s.correo, s.activo,s.fecha_nacimiento, m.fecha_fin "
                 + "FROM socio s "
                 + "INNER JOIN membresia m ON s.id_socio = m.id_socio";
 
@@ -41,7 +41,7 @@ public class SocioDAO {
 
         String consulta = "INSERT INTO socio (documento, nombres, apellidos, "
                 + "telefono, correo, fecha_nacimiento)"
-                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+                + "VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection cn = ConexionDB.getConnection(); PreparedStatement ps = cn.prepareStatement(consulta)) {
 
@@ -106,6 +106,8 @@ public class SocioDAO {
         oSocio.setApellidos(rs.getString("apellidos"));
         oSocio.setTelefono(rs.getString("telefono"));
         oSocio.setCorreo(rs.getString("correo"));
+        oSocio.setActivo(rs.getBoolean("activo"));
+        oSocio.setFechaNacimiento(rs.getObject("fecha_nacimiento", LocalDate.class));
         if (oSocio.getMembresia() == null) {
             oSocio.setMembresia(new Membresia());
         }

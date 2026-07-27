@@ -58,15 +58,17 @@ public class SocioService {
 
         for (Socio socio : listaSocios) {
             Map<String, Object> map = new HashMap<>();
-            map.put("Id",socio.getId());
+            map.put("Id", socio.getId());
             map.put("nombres", socio.getNombres());
             map.put("apellidos", socio.getApellidos());
             map.put("documento", socio.getDocumento());
             map.put("telefono", socio.getTelefono());
             map.put("email", socio.getCorreo());
+            map.put("activo",socio.isActivo());
+            map.put("fecha_nacimiento", socio.getFechaNacimiento());
 
             EstadoMembresia estado = oMembresiaService.MTCalcularEstado(socio.getMembresia());
-            map.put("estadoMembresia", estado != null ? estado.name() : "VENCIDA");
+            map.put("estadoMembresia", estado != null ? estado.name() : "SIN_MEMBRESIA");
 
             listaResultado.add(map);
         }
@@ -75,7 +77,7 @@ public class SocioService {
     }
 
     private void MtValidarDatos(Socio s) throws Exception {
-        if (s != null) {
+        if (s == null) {
             throw new Exception("Los datos del socio son obligatorios.");
         }
 
@@ -86,11 +88,15 @@ public class SocioService {
         if (Validador.esVacio(s.getNombres())) {
             throw new Exception("El noombre son obligatorios");
         }
-        if (Validador.esNumero(s.getDocumento())) {
+        if (!Validador.esNumero(s.getDocumento())) {
             throw new Exception("El documento debe estar constituido unicamente por números");
         }
 
-        if (Validador.esEmailValido(s.getCorreo())) {
+        if (!Validador.esNumero(s.getTelefono())) {
+            throw new Exception("El telefono debe estar constituido unicamente por números");
+        }
+
+        if (!Validador.esEmailValido(s.getCorreo())) {
             throw new Exception("El formato del correo electrónico no es válido");
         }
 

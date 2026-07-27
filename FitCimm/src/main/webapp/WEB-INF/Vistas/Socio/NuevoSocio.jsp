@@ -9,470 +9,478 @@
 
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Registrar Socio - Partner Manager</title>
-  
-  <!-- Tipografía Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Registrar Socio - Partner Manager</title>
 
-  <style>
-    /* ==========================================================================
-       VARIABLES DE COLOR Y DISEÑO (Paleta Azul)
-       ========================================================================== */
-    :root {
-      --bg-main: #f8fafc;            /* Slate 50 */
-      --bg-surface: #ffffff;         /* Blanco */
-      --sidebar-bg: #0f172a;         /* Slate 900 (Azul Noche Profundo) */
-      --sidebar-hover: #1e293b;      /* Slate 800 */
-      
-      --primary: #2563eb;            /* Blue 600 */
-      --primary-hover: #1d4ed8;      /* Blue 700 */
-      --primary-light: #eff6ff;      /* Blue 50 */
-      --primary-border: #bfdbfe;     /* Blue 200 */
-      
-      --text-main: #0f172a;          /* Slate 900 */
-      --text-muted: #64748b;         /* Slate 500 */
-      --text-white: #ffffff;
-      
-      --border-color: #cbd5e1;       /* Slate 300 (Más definido que Slate 200) */
-      --border-focus: #2563eb;       /* Blue 600 */
-      
-      --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-      --shadow-input-focus: 0 0 0 3px rgba(37, 99, 235, 0.15);
-      --radius: 8px;
-    }
+        <!-- Tipografía Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+        <style>
+            /* ==========================================================================
+               VARIABLES DE COLOR Y DISEÑO (Paleta Azul)
+               ========================================================================== */
+            :root {
+                --bg-main: #f8fafc;            /* Slate 50 */
+                --bg-surface: #ffffff;         /* Blanco */
+                --sidebar-bg: #0f172a;         /* Slate 900 (Azul Noche Profundo) */
+                --sidebar-hover: #1e293b;      /* Slate 800 */
 
-    body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: var(--bg-main);
-      color: var(--text-main);
-      display: flex;
-      height: 100vh;
-      overflow: hidden;
-    }
+                --primary: #2563eb;            /* Blue 600 */
+                --primary-hover: #1d4ed8;      /* Blue 700 */
+                --primary-light: #eff6ff;      /* Blue 50 */
+                --primary-border: #bfdbfe;     /* Blue 200 */
 
-    /* ==========================================================================
-       BARRA LATERAL (Sidebar)
-       ========================================================================== */
-    .sidebar {
-      width: 260px;
-      background-color: var(--sidebar-bg);
-      display: flex;
-      flex-direction: column;
-      padding: 24px 16px;
-      flex-shrink: 0;
-    }
+                --text-main: #0f172a;          /* Slate 900 */
+                --text-muted: #64748b;         /* Slate 500 */
+                --text-white: #ffffff;
 
-    .brand {
-      padding: 0 12px 24px 12px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      margin-bottom: 24px;
-    }
+                --border-color: #cbd5e1;       /* Slate 300 (Más definido que Slate 200) */
+                --border-focus: #2563eb;       /* Blue 600 */
 
-    .brand-title {
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--text-white);
-      letter-spacing: -0.02em;
-    }
+                --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+                --shadow-input-focus: 0 0 0 3px rgba(37, 99, 235, 0.15);
+                --radius: 8px;
+            }
 
-    .brand-subtitle {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px;
-      color: #38bdf8;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-top: 4px;
-    }
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
 
-    .nav-menu {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      flex: 1;
-    }
+            body {
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                background-color: var(--bg-main);
+                color: var(--text-main);
+                display: flex;
+                height: 100vh;
+                overflow: hidden;
+            }
 
-    .nav-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 16px;
-      color: #94a3b8;
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 500;
-      border-radius: var(--radius);
-      transition: all 0.2s ease;
-    }
+            /* ==========================================================================
+               BARRA LATERAL (Sidebar)
+               ========================================================================== */
+            .sidebar {
+                width: 260px;
+                background-color: var(--sidebar-bg);
+                display: flex;
+                flex-direction: column;
+                padding: 24px 16px;
+                flex-shrink: 0;
+            }
 
-    .nav-item:hover {
-      background-color: var(--sidebar-hover);
-      color: var(--text-white);
-    }
+            .brand {
+                padding: 0 12px 24px 12px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                margin-bottom: 24px;
+            }
 
-    .nav-item.active {
-      background-color: var(--primary);
-      color: var(--text-white);
-      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-    }
+            .brand-title {
+                font-size: 20px;
+                font-weight: 700;
+                color: var(--text-white);
+                letter-spacing: -0.02em;
+            }
 
-    .nav-item.logout {
-      margin-top: auto;
-    }
+            .brand-subtitle {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 11px;
+                color: #38bdf8;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                margin-top: 4px;
+            }
 
-    /* ==========================================================================
-       ESTRUCTURA PRINCIPAL Y HEADER
-       ========================================================================== */
-    .main-wrapper {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
+            .nav-menu {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+                flex: 1;
+            }
 
-    .top-header {
-      height: 70px;
-      background-color: var(--bg-surface);
-      border-bottom: 1px solid #e2e8f0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 32px;
-    }
+            .nav-item {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 12px 16px;
+                color: #94a3b8;
+                text-decoration: none;
+                font-size: 14px;
+                font-weight: 500;
+                border-radius: var(--radius);
+                transition: all 0.2s ease;
+            }
 
-    .header-title {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--text-main);
-    }
+            .nav-item:hover {
+                background-color: var(--sidebar-hover);
+                color: var(--text-white);
+            }
 
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
+            .nav-item.active {
+                background-color: var(--primary);
+                color: var(--text-white);
+                box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+            }
 
-    .icon-btn {
-      background: transparent;
-      border: 1px solid #e2e8f0;
-      color: var(--text-muted);
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
+            .nav-item.logout {
+                margin-top: auto;
+            }
 
-    .icon-btn:hover {
-      background-color: var(--primary-light);
-      color: var(--primary);
-      border-color: var(--primary-border);
-    }
+            /* ==========================================================================
+               ESTRUCTURA PRINCIPAL Y HEADER
+               ========================================================================== */
+            .main-wrapper {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+            }
 
-    .profile-avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid var(--primary-border);
-      cursor: pointer;
-    }
+            .top-header {
+                height: 70px;
+                background-color: var(--bg-surface);
+                border-bottom: 1px solid #e2e8f0;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 32px;
+            }
 
-    /* Contenedor del Formulario */
-    .content-container {
-      flex: 1;
-      overflow-y: auto;
-      padding: 32px;
-      display: flex;
-      flex-direction: column;
-      max-width: 900px;
-      width: 100%;
-      margin: 0 auto;
-    }
+            .header-title {
+                font-size: 18px;
+                font-weight: 700;
+                color: var(--text-main);
+            }
 
-    .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 16px;
-      transition: color 0.2s;
-    }
+            .header-actions {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+            }
 
-    .back-link:hover {
-      color: var(--primary);
-    }
+            .icon-btn {
+                background: transparent;
+                border: 1px solid #e2e8f0;
+                color: var(--text-muted);
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: all 0.2s;
+            }
 
-    /* ==========================================================================
-       TARJETA DE FORMULARIO & CAJAS DE TEXTO MEJORADAS
-       ========================================================================== */
-    .form-card {
-      background: var(--bg-surface);
-      border-radius: 12px;
-      border: 1px solid #e2e8f0;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-      padding: 32px;
-    }
+            .icon-btn:hover {
+                background-color: var(--primary-light);
+                color: var(--primary);
+                border-color: var(--primary-border);
+            }
 
-    .form-header {
-      border-bottom: 1px solid #e2e8f0;
-      padding-bottom: 20px;
-      margin-bottom: 28px;
-    }
+            .profile-avatar {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                object-fit: cover;
+                border: 2px solid var(--primary-border);
+                cursor: pointer;
+            }
 
-    .form-header h1 {
-      font-size: 24px;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      color: var(--text-main);
-    }
+            /* Contenedor del Formulario */
+            .content-container {
+                flex: 1;
+                overflow-y: auto;
+                padding: 32px;
+                display: flex;
+                flex-direction: column;
+                max-width: 900px;
+                width: 100%;
+                margin: 0 auto;
+            }
 
-    .form-header p {
-      font-size: 14px;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
+            .back-link {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                color: var(--text-muted);
+                text-decoration: none;
+                font-size: 13px;
+                font-weight: 600;
+                margin-bottom: 16px;
+                transition: color 0.2s;
+            }
 
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px 24px;
-    }
+            .back-link:hover {
+                color: var(--primary);
+            }
 
-    @media (max-width: 640px) {
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
-    }
+            /* ==========================================================================
+               TARJETA DE FORMULARIO & CAJAS DE TEXTO MEJORADAS
+               ========================================================================== */
+            .form-card {
+                background: var(--bg-surface);
+                border-radius: 12px;
+                border: 1px solid #e2e8f0;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+                padding: 32px;
+            }
 
-    .field-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
+            .form-header {
+                border-bottom: 1px solid #e2e8f0;
+                padding-bottom: 20px;
+                margin-bottom: 28px;
+            }
 
-    .field-group.full-width {
-      grid-column: 1 / -1;
-    }
+            .form-header h1 {
+                font-size: 24px;
+                font-weight: 700;
+                letter-spacing: -0.01em;
+                color: var(--text-main);
+            }
 
-    .input-label {
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      color: #475569; /* Slate 600 para mejor legibilidad */
-    }
+            .form-header p {
+                font-size: 14px;
+                color: var(--text-muted);
+                margin-top: 4px;
+            }
 
-    /* CAJAS DE TEXTO REFORZADAS CON MÁS PRESENCIA VISUAL */
-    .input-control {
-      width: 100%;
-      height: 44px;
-      padding: 0 14px;
-      font-family: inherit;
-      font-size: 14px;
-      color: var(--text-main);
-      background-color: #f8fafc; /* Slate 50 sutil de fondo */
-      border: 1.5px solid var(--border-color); /* Borde más grueso y visible */
-      border-radius: var(--radius);
-      outline: none;
-      box-shadow: var(--shadow-sm); /* Sombra suave de inserción */
-      transition: all 0.2s ease-in-out;
-    }
+            .form-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px 24px;
+            }
 
-    .input-control.mono {
-      font-family: 'JetBrains Mono', monospace;
-    }
+            @media (max-width: 640px) {
+                .form-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
 
-    .input-control::placeholder {
-      color: #94a3b8;
-    }
+            .field-group {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+            }
 
-    /* Estado Hover & Focus de las Cajas de Texto */
-    .input-control:hover {
-      background-color: #ffffff;
-      border-color: #94a3b8; /* Slate 400 */
-    }
+            .field-group.full-width {
+                grid-column: 1 / -1;
+            }
 
-    .input-control:focus {
-      background-color: #ffffff;
-      border-color: var(--border-focus);
-      box-shadow: var(--shadow-input-focus);
-    }
+            .input-label {
+                font-size: 12px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.04em;
+                color: #475569; /* Slate 600 para mejor legibilidad */
+            }
 
-    /* Acciones del Formulario */
-    .form-actions {
-      grid-column: 1 / -1;
-      display: flex;
-      justify-content: flex-end;
-      gap: 12px;
-      margin-top: 12px;
-      padding-top: 24px;
-      border-top: 1px solid #e2e8f0;
-    }
+            /* CAJAS DE TEXTO REFORZADAS CON MÁS PRESENCIA VISUAL */
+            .input-control {
+                width: 100%;
+                height: 44px;
+                padding: 0 14px;
+                font-family: inherit;
+                font-size: 14px;
+                color: var(--text-main);
+                background-color: #f8fafc; /* Slate 50 sutil de fondo */
+                border: 1.5px solid var(--border-color); /* Borde más grueso y visible */
+                border-radius: var(--radius);
+                outline: none;
+                box-shadow: var(--shadow-sm); /* Sombra suave de inserción */
+                transition: all 0.2s ease-in-out;
+            }
 
-    .btn-secondary {
-      background-color: var(--bg-surface);
-      color: var(--text-main);
-      border: 1px solid var(--border-color);
-      padding: 10px 20px;
-      font-size: 14px;
-      font-weight: 600;
-      border-radius: var(--radius);
-      cursor: pointer;
-      transition: all 0.2s;
-    }
+            .input-control.mono {
+                font-family: 'JetBrains Mono', monospace;
+            }
 
-    .btn-secondary:hover {
-      background-color: var(--bg-main);
-      border-color: #94a3b8;
-    }
+            .input-control::placeholder {
+                color: #94a3b8;
+            }
 
-    .btn-primary {
-      background-color: var(--primary);
-      color: var(--text-white);
-      border: none;
-      padding: 10px 24px;
-      font-size: 14px;
-      font-weight: 600;
-      border-radius: var(--radius);
-      cursor: pointer;
-      box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
-      transition: all 0.2s;
-    }
+            /* Estado Hover & Focus de las Cajas de Texto */
+            .input-control:hover {
+                background-color: #ffffff;
+                border-color: #94a3b8; /* Slate 400 */
+            }
 
-    .btn-primary:hover {
-      background-color: var(--primary-hover);
-      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.35);
-    }
-  </style>
-</head>
+            .input-control:focus {
+                background-color: #ffffff;
+                border-color: var(--border-focus);
+                box-shadow: var(--shadow-input-focus);
+            }
 
-<body>
+            /* Acciones del Formulario */
+            .form-actions {
+                grid-column: 1 / -1;
+                display: flex;
+                justify-content: flex-end;
+                gap: 12px;
+                margin-top: 12px;
+                padding-top: 24px;
+                border-top: 1px solid #e2e8f0;
+            }
 
-  <!-- Sidebar Lateral -->
-  <aside class="sidebar">
-    <div class="brand">
-      <div class="brand-title">Partner Manager</div>
-      <div class="brand-subtitle">Portal Administrativo</div>
-    </div>
-    
-    <nav class="nav-menu">
-      <a class="nav-item" href="#">
-        <span class="material-symbols-outlined">dashboard</span>
-        <span>Dashboard</span>
-      </a>
-      <a class="nav-item active" href="#">
-        <span class="material-symbols-outlined">group</span>
-        <span>Socios</span>
-      </a>
-      <a class="nav-item" href="#">
-        <span class="material-symbols-outlined">analytics</span>
-        <span>Reportes</span>
-      </a>
-      <a class="nav-item logout" href="#">
-        <span class="material-symbols-outlined">settings</span>
-        <span>Configuración</span>
-      </a>
-    </nav>
-  </aside>
+            .btn-secondary {
+                background-color: var(--bg-surface);
+                color: var(--text-main);
+                border: 1px solid var(--border-color);
+                padding: 10px 20px;
+                font-size: 14px;
+                font-weight: 600;
+                border-radius: var(--radius);
+                cursor: pointer;
+                transition: all 0.2s;
+            }
 
-  <!-- Contenedor Principal -->
-  <div class="main-wrapper">
-    
-    <!-- Barra Superior -->
-    <header class="top-header">
-      <div class="header-title">Gestión de Socios</div>
-      
-      <div class="header-actions">
-        <button class="icon-btn" title="Notificaciones">
-          <span class="material-symbols-outlined">notifications</span>
-        </button>
-        <img class="profile-avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnZawZHMJvj90LAZ9WYwbZO1VbyGqHHAv31Bm8s0oc8BH28zVmBnOdspAMrV9CNX5hsZoVhCl2allcWren7IsaaK9i2JgJuVs_ZbG_lJtPrwFJ8XDWSEC3kuINSEbRiD3r7dkCJ3VrzbAduEJCI8qB8GWPiqc7JlzEEadrhOz8fk7FeBz1SIBfNGTgHVnlQtjQubeXGMhNUnriMKEO4f2CXUlc17DBeFNj2maGnDQm-gA335PKMihg4MZeNlxlT4kwa9P_qroovO7o" alt="Avatar Admin"/>
-      </div>
-    </header>
+            .btn-secondary:hover {
+                background-color: var(--bg-main);
+                border-color: #94a3b8;
+            }
 
-    <!-- Canvas de Contenido -->
-    <main class="content-container">
-      
-      <!-- Link de retorno -->
-      <div>
-        <a class="back-link" href="#">
-          <span class="material-symbols-outlined">arrow_back</span>
-          Volver al Listado
-        </a>
-      </div>
+            .btn-primary {
+                background-color: var(--primary);
+                color: var(--text-white);
+                border: none;
+                padding: 10px 24px;
+                font-size: 14px;
+                font-weight: 600;
+                border-radius: var(--radius);
+                cursor: pointer;
+                box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+                transition: all 0.2s;
+            }
 
-      <!-- Tarjeta del Formulario -->
-      <div class="form-card">
-        <div class="form-header">
-          <h1>Registrar Nuevo Socio</h1>
-          <p>Complete la información requerida para dar de alta un nuevo socio en el sistema.</p>
+            .btn-primary:hover {
+                background-color: var(--primary-hover);
+                box-shadow: 0 4px 10px rgba(37, 99, 235, 0.35);
+            }
+        </style>
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="${pageContext.request.contextPath}/js/sweetAlert.js"></script>
+    </head>
+
+    <body>
+        <jsp:include page="/WEB-INF/Vistas/Menu.jsp"/>
+
+
+        <!-- Contenedor Principal -->
+        <div class="main-wrapper">
+
+            <!-- Barra Superior -->
+            <header class="top-header">
+                <div class="header-title">Gestión de Socios</div>
+
+                <div class="header-actions">
+                    <button class="icon-btn" title="Notificaciones">
+                        <span class="material-symbols-outlined">notifications</span>
+                    </button>
+                    <img class="profile-avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnZawZHMJvj90LAZ9WYwbZO1VbyGqHHAv31Bm8s0oc8BH28zVmBnOdspAMrV9CNX5hsZoVhCl2allcWren7IsaaK9i2JgJuVs_ZbG_lJtPrwFJ8XDWSEC3kuINSEbRiD3r7dkCJ3VrzbAduEJCI8qB8GWPiqc7JlzEEadrhOz8fk7FeBz1SIBfNGTgHVnlQtjQubeXGMhNUnriMKEO4f2CXUlc17DBeFNj2maGnDQm-gA335PKMihg4MZeNlxlT4kwa9P_qroovO7o" alt="Avatar Admin"/>
+                </div>
+            </header>
+
+            <!-- Canvas de Contenido -->
+            <main class="content-container">
+
+                <!-- Link de retorno -->
+                <div>
+                    <a class="back-link" href="#">
+                        <span class="material-symbols-outlined">arrow_back</span>
+                        Volver al Listado
+                    </a>
+                </div>
+
+                <!-- Tarjeta del Formulario -->
+                <div class="form-card">
+                    <div class="form-header">
+                        <h1>Registrar Nuevo Socio</h1>
+                        <p>Complete la información requerida para dar de alta un nuevo socio en el sistema.</p>
+                    </div>
+
+                    <form class="form-grid" action="${pageContext.request.contextPath}/SocioController" method="POST">
+
+                        <input type="hidden" name="action" value="registrar">
+                        <!-- Documento -->
+                        <div class="field-group">
+                            <label class="input-label" for="documento">Documento / DNI</label>
+                            <input class="input-control mono" id="documento" name="documento" placeholder="Ej. 123456789" required />
+                        </div>
+
+                        <!-- Fecha de Nacimiento -->
+                        <div class="field-group">
+                            <label class="input-label" for="fecha_nacimiento">Fecha de Nacimiento</label>
+                            <input class="input-control" id="fecha_nacimiento" name="fecha_nacimiento" type="date"  required />
+                        </div>
+
+                        <!-- Nombres -->
+                        <div class="field-group">
+                            <label class="input-label" for="nombres">Nombres</label>
+                            <input class="input-control" id="nombres" name="nombres" placeholder="Nombres del socio" type="text" required />
+                        </div>
+
+                        <!-- Apellidos -->
+                        <div class="field-group">
+                            <label class="input-label" for="apellidos">Apellidos</label>
+                            <input class="input-control" id="apellidos" name="apellidos" placeholder="Apellidos del socio" type="text" required />
+                        </div>
+
+                        <!-- Teléfono -->
+                        <div class="field-group">
+                            <label class="input-label" for="telefono">Teléfono</label>
+                            <input class="input-control" id="telefono" name="telefono" placeholder="+54 9 11 0000-0000" type="tel" />
+                        </div>
+
+                        <!-- Correo -->
+                        <div class="field-group">
+                            <label class="input-label" for="correo">Correo Electrónico</label>
+                            <input class="input-control" id="correo" name="correo" placeholder="correo@ejemplo.com" type="email" required />
+                        </div>
+
+                        <!-- Acciones -->
+                        <div class="form-actions">
+                            <button class="btn-secondary" type="button">Cancelar</button>
+                            <button class="btn-primary" type="submit">Guardar Socio</button>
+                        </div>
+                    </form>
+                </div>
+
+            </main>
         </div>
-
-        <form class="form-grid" action="#" method="POST" onsubmit="event.preventDefault();">
-          <!-- Documento -->
-          <div class="field-group">
-            <label class="input-label" for="documento">Documento / DNI</label>
-            <input class="input-control mono" id="documento" name="documento" placeholder="Ej. 123456789" type="text" required />
-          </div>
-
-          <!-- Fecha de Nacimiento -->
-          <div class="field-group">
-            <label class="input-label" for="fecha_nacimiento">Fecha de Nacimiento</label>
-            <input class="input-control" id="fecha_nacimiento" name="fecha_nacimiento" type="date" required />
-          </div>
-
-          <!-- Nombres -->
-          <div class="field-group">
-            <label class="input-label" for="nombres">Nombres</label>
-            <input class="input-control" id="nombres" name="nombres" placeholder="Nombres del socio" type="text" required />
-          </div>
-
-          <!-- Apellidos -->
-          <div class="field-group">
-            <label class="input-label" for="apellidos">Apellidos</label>
-            <input class="input-control" id="apellidos" name="apellidos" placeholder="Apellidos del socio" type="text" required />
-          </div>
-
-          <!-- Teléfono -->
-          <div class="field-group">
-            <label class="input-label" for="telefono">Teléfono</label>
-            <input class="input-control" id="telefono" name="telefono" placeholder="+54 9 11 0000-0000" type="tel" />
-          </div>
-
-          <!-- Correo -->
-          <div class="field-group">
-            <label class="input-label" for="correo">Correo Electrónico</label>
-            <input class="input-control" id="correo" name="correo" placeholder="correo@ejemplo.com" type="email" required />
-          </div>
-
-          <!-- Acciones -->
-          <div class="form-actions">
-            <button class="btn-secondary" type="button">Cancelar</button>
-            <button class="btn-primary" type="submit">Guardar Socio</button>
-          </div>
-        </form>
-      </div>
-
-    </main>
-  </div>
-
-</body>
+        <%
+            String error = (String) request.getAttribute("error");
+            if (error != null && !error.isEmpty()) {
+        %>
+        <script>
+            window.addEventListener('DOMContentLoaded', () => {
+                sweetAlert.error("¡Error!", "<%= error%>");
+            });
+        </script>
+        <%} else {%>
+        <script>
+            window.addEventListener('DOMContentLoaded', () => {
+                const url = new URLSearchParams(window.location.search);
+                if (url.get('exito') === 'true') {
+                    Swal.fire({
+                        title: '¡Creado con éxito!',
+                        text: 'Los datos del socio se guardaron correctamente. A continuacion se le redirigira para que le asigne una membresia al socio',
+                        icon: 'success',
+                        timer: 2000, 
+                        timerProgressBar: true, 
+                        showConfirmButton: false, 
+                        willClose: () => {
+                            window.location.href = 'MembresiaController?accion=nuevo';
+                        }
+                    });
+                }
+            });
+        </script>
+        <%}%>
+    </body>
 </html>

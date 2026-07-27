@@ -8,10 +8,10 @@
         --sidebar-bg: #0f172a;       /* Slate 900 */
         --sidebar-border: #1e293b;   /* Slate 800 */
         --sidebar-text: #cbd5e1;     /* Slate 300 */
-        --sidebar-hover-bg: #1e293b; 
+        --sidebar-hover-bg: #1e293b;
         --sidebar-hover-text: #ffffff;
         --primary-color: #0284c7;    /* Sky 600 */
-        
+
         /* Variables globales del body */
         --body-bg: #f8fafc;
         --body-text: #0f172a;
@@ -24,7 +24,7 @@
         --sidebar-text: #475569;
         --sidebar-hover-bg: #f1f5f9;
         --sidebar-hover-text: #0f172a;
-        
+
         --body-bg: #f1f5f9;
         --body-text: #0f172a;
     }
@@ -160,16 +160,16 @@
                 <div class="brand-icon">
                     <span class="material-symbols-outlined">view_quilt</span>
                 </div>
-                <span class="brand-title">Partner<span class="brand-title-accent">Pro</span></span>
+                <span class="brand-title">Gym<span class="brand-title-accent">Fat</span></span>
             </div>
-            <button id="themeToggle" class="theme-btn" title="Cambiar tema">
-                <span id="themeIcon" class="material-symbols-outlined">dark_mode</span>
+            <button id="darkModeToggle" class="icon-btn" title="Cambiar modo oscuro">
+                <span class="material-symbols-outlined" id="themeIcon">dark_mode</span>
             </button>
         </div>
 
         <!-- Enlaces de Navegación -->
         <nav class="sidebar-nav">
-            <a href="${pageContext.request.contextPath}/DashboardController" class="nav-item nav-item-back">
+            <a href="${pageContext.request.contextPath}/index.jsp" class="nav-item nav-item-back">
                 <span class="material-symbols-outlined">arrow_back</span>
                 <span>Volver</span>
             </a>
@@ -189,7 +189,7 @@
                 <span>Reportes</span>
             </a>
 
-            <a href="${pageContext.request.contextPath}/SocioController" class="nav-item">
+            <a href="${pageContext.request.contextPath}/SocioController?action=listar" class="nav-item">
                 <span class="material-symbols-outlined">group</span>
                 <span>Socios</span>
             </a>
@@ -198,7 +198,46 @@
                 <span class="material-symbols-outlined">payments</span>
                 <span>Ingresos</span>
             </a>
-        </nav>
+        </nav>  
     </div>
 </aside>
 
+<script>
+    (function () {
+        const body = document.body;
+        const themeIcon = document.getElementById('themeIcon');
+
+        // Aplicar de forma inmediata el tema guardado al cargar
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            body.classList.add('light-mode');
+            if (themeIcon)
+                themeIcon.textContent = 'light_mode';
+        } else {
+            if (themeIcon)
+                themeIcon.textContent = 'dark_mode';
+        }
+
+        // Escuchar clics en el botón de cambio
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleBtn = document.getElementById('darkModeToggle');
+            const icon = document.getElementById('themeIcon');
+
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', () => {
+                    body.classList.toggle('light-mode');
+
+                    if (body.classList.contains('light-mode')) {
+                        localStorage.setItem('theme', 'light');
+                        if (icon)
+                            icon.textContent = 'light_mode';
+                    } else {
+                        localStorage.setItem('theme', 'dark');
+                        if (icon)
+                            icon.textContent = 'dark_mode';
+                    }
+                });
+            }
+        });
+    })();
+</script>

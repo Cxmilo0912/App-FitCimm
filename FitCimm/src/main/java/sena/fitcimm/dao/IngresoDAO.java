@@ -30,7 +30,7 @@ public class IngresoDAO {
     }
 
     public Socio MtConsultarIngresoPorDocumento(String documento) throws SQLException {
-        String consulta = "SELECT s.id_socio, s.nombres, s.apellidos, m.fecha_fin "
+        String consulta = "SELECT s.id_socio, s.nombres, s.apellidos, s.activo, m.fecha_fin "
                 + "FROM socio s "
                 + "INNER JOIN membresia m ON s.id_socio = m.id_socio "
                 + "WHERE s.documento = ? "
@@ -46,7 +46,7 @@ public class IngresoDAO {
                     Socio oSocio = new Socio();
                     oSocio.setId(rs.getInt("id_socio"));
                     oSocio.setNombres(rs.getString("nombres"));
-
+                    oSocio.setActivo(rs.getBoolean("activo"));
                     Membresia oMembresia = new Membresia();
                     oMembresia.setFechaFin(rs.getObject("fecha_fin", LocalDate.class));
 
