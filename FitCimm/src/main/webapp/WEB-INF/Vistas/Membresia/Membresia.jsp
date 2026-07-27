@@ -263,13 +263,13 @@
                 color: #991b1b;
                 border: 1px solid #fecaca;
             }
-            
+
             .badge-porvencer {
                 background-color: #fef3c7;
                 color: #92400e;
                 border: 1px solid #fde68a;
             }
-            
+
 
             /* BOTÓN RENOVACIÓN */
             .btn-renew {
@@ -547,6 +547,7 @@
             $(document).ready(function () {
                 $('#tablaMembresias').DataTable({
                     paging: true,
+                    "dom": 'rtip',
 
                     language: {
                         url: 'https://cdn.datatables.net/plug-ins/1.13.8/i18n/es-ES.json'

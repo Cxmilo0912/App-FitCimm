@@ -1,0 +1,49 @@
+• Listar cada socio con la fecha de fin de su membresía más reciente y los días que le restan. 
+
+SELECT s.id_socio,s.documento, s.nombres, s.apellidos, m.fecha_fin, p.nombre,DATEDIFF(fecha_fin,CURDATE()) AS DiasRestantes 
+FROM socio s 
+INNER JOIN membresia m ON s.id_socio = m.id_socio 
+INNER JOIN plan p ON m.id_plan = p.id_plan 
+INNER JOIN (
+SELECT id_socio, MAX(fecha_fin) AS max_fin 
+FROM membresia 
+GROUP BY id_socio
+)ultima ON m.id_socio = ultima.id_socio AND m.fecha_fin = ultima.max_fin;
+
+• Obtener el total recaudado por plan en un rango de fechas, ordenado de mayor a menor. 
+
+SELECT p.nombre,p.valor,SUM(m.valor_pagado) AS recaudado FROM plan p  
+INNER JOIN membresia m 
+ON m.id_plan = p.id_plan  
+WHERE m.fecha_inicio BETWEEN '2026-07-01' AND '2026-07-31'  
+GROUP BY p.nombre ORDER BY recaudado DESC;
+
+• Identificar los socios cuya membresía vence dentro de los próximos 5 días.
+
+ SELECT s.id_socio,s.documento, s.nombres, s.apellidos, m.fecha_fin, p.nombre,DATEDIFF(fecha_fin,CURDATE()) AS DiasRestantes 
+FROM socio s 
+INNER JOIN membresia m ON s.id_socio = m.id_socio 
+INNER JOIN plan p ON m.id_plan = p.id_plan 
+INNER JOIN (
+SELECT id_socio, MAX(fecha_fin) AS max_fin 
+FROM membresia 
+GROUP BY id_socio
+)ultima ON m.id_socio = ultima.id_socio AND m.fecha_fin = ultima.max_fin
+HAVING DiasRestantes BETWEEN 0 and 5;
+
+• Contar cuántos ingresos se registraron por día durante la última semana. 
+
+SELECT 
+    DATE(fecha_ingreso) AS Fecha, 
+    COUNT(*) AS TotalIngresos
+FROM ingreso
+WHERE fecha_ingreso >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+GROUP BY DATE(fecha_ingreso)
+ORDER BY Fecha DESC;
+
+• Encontrar los socios activos que nunca han registrado un ingreso.
+
+SELECT s.* 
+FROM socio s
+LEFT JOIN ingreso i ON s.id_socio = i.id_socio
+WHERE i.id_ingreso IS NULL;
