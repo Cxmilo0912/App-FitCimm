@@ -11,7 +11,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import sena.fitcimm.model.*;
 import sena.fitcimm.util.ConexionDB;
 
@@ -25,7 +27,12 @@ public class SocioDAO {
         List<Socio> lista = new ArrayList<>();
         String consulta = "SELECT s.id_socio, s.nombres, s.apellidos, s.documento, s.telefono, s.correo, s.activo,s.fecha_nacimiento, m.fecha_fin "
                 + "FROM socio s "
-                + "INNER JOIN membresia m ON s.id_socio = m.id_socio";
+                + "INNER JOIN membresia m ON s.id_socio = m.id_socio "
+                + "INNER JOIN ("
+                + "    SELECT id_socio, MAX(fecha_fin) AS max_fin "
+                + "    FROM membresia "
+                + "    GROUP BY id_socio"
+                + ") ultima ON m.id_socio = ultima.id_socio AND m.fecha_fin = ultima.max_fin";
 
         try (Connection cn = ConexionDB.getConnection(); PreparedStatement ps = cn.prepareStatement(consulta); ResultSet rs = ps.executeQuery()) {
 
@@ -36,17 +43,51 @@ public class SocioDAO {
 
         return lista;
     }
-    
+
     public List<Socio> MtListarSocios() throws SQLException {
         List<Socio> lista = new ArrayList<>();
         String consulta = "SELECT s.id_socio, s.nombres, s.apellidos, s.documento, s.telefono, s.correo "
                 + "FROM socio s ";
-           
 
         try (Connection cn = ConexionDB.getConnection(); PreparedStatement ps = cn.prepareStatement(consulta); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 lista.add(MtMapearSocio(rs));
+            }
+        }
+
+        return lista;
+    }
+
+    public List<Map<String, Object>> MtHistorialMembresiaSocio(int id) throws SQLException {
+        List<Map<String, Object>> lista = new ArrayList<>();
+        String consulta = "SELECT s.nombres, p.nombre, m.fecha_inicio, m.fecha_fin, m.valor_pagado from socio s "
+                + "Inner Join "
+                + "membresia m "
+                + "ON "
+                + "s.id_socio = m.id_socio "
+                + "Inner Join plan p "
+                + "ON "
+                + "m.id_plan = p.id_plan "
+                + "Where s.id_socio = ? ";
+
+        try (Connection cn = ConexionDB.getConnection(); PreparedStatement ps = cn.prepareStatement(consulta)) {
+
+            ps.setInt(1, id);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("nombresSocio", rs.getString("nombres"));
+                    map.put("nombrePlan", rs.getString("nombre"));
+                    Membresia membresia = new Membresia();
+                    membresia.setFechaInicio(rs.getObject("fecha_inicio", LocalDate.class));
+                    membresia.setFechaFin(rs.getObject("fecha_fin", LocalDate.class));
+                    membresia.setValorPagado(rs.getDouble("valor_pagado"));
+                    map.put("membresiaObjeto", membresia);
+
+                    lista.add(map);
+                }
             }
         }
 
@@ -132,7 +173,7 @@ public class SocioDAO {
         return oSocio;
 
     }
-    
+
     private Socio MtMapearSocio(ResultSet rs) throws SQLException {
 
         Socio oSocio = new Socio();
@@ -143,8 +184,9 @@ public class SocioDAO {
         oSocio.setApellidos(rs.getString("apellidos"));
         oSocio.setTelefono(rs.getString("telefono"));
         oSocio.setCorreo(rs.getString("correo"));
-     
+
         return oSocio;
 
     }
+
 }

@@ -39,6 +39,14 @@ public class SocioController extends HttpServlet {
 
             } else if (accion.equals("nuevo")) {
                 req.getRequestDispatcher("/WEB-INF/Vistas/Socio/NuevoSocio.jsp").forward(req, resp);
+            } else if (accion.equals("historial")) {
+                int idSocio = Integer.parseInt(req.getParameter("idHistorial"));
+                List<Map<String, Object>> historial = oSocioService.MtHistorialMembresiaSocio(idSocio);
+                req.setAttribute("historialMembresias", historial);
+                req.setAttribute("abrirModalHistorial", true);
+                List<Map<String, Object>> listaSocios = oSocioService.MtListarSociosConEstado();
+                req.setAttribute("listaSocios", listaSocios);
+                req.getRequestDispatcher("/WEB-INF/Vistas/Socio/ListarSocios.jsp").forward(req, resp);
             }
         } catch (Exception e) {
             req.setAttribute("errorMsg", e.getMessage());

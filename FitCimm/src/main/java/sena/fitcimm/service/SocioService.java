@@ -4,7 +4,6 @@
  */
 package sena.fitcimm.service;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -64,7 +63,7 @@ public class SocioService {
             map.put("documento", socio.getDocumento());
             map.put("telefono", socio.getTelefono());
             map.put("email", socio.getCorreo());
-            map.put("activo",socio.isActivo());
+            map.put("activo", socio.isActivo());
             map.put("fecha_nacimiento", socio.getFechaNacimiento());
 
             EstadoMembresia estado = oMembresiaService.MTCalcularEstado(socio.getMembresia());
@@ -75,9 +74,30 @@ public class SocioService {
 
         return listaResultado;
     }
+
+    public List<Map<String, Object>> MtHistorialMembresiaSocio(int id) throws Exception {
+        List<Map<String, Object>> listaSocios = oSocioDao.MtHistorialMembresiaSocio(id);
+        List<Map<String, Object>> listaResultado = new ArrayList<>();
+
+        for (Map<String, Object> socios : listaSocios) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("nombresSocio", socios.get("nombresSocio"));
+            map.put("nombrePlan", socios.get("nombrePlan"));
+            Membresia membresia = (Membresia) socios.get("membresiaObjeto");
+            map.put("fechaInicio", membresia.getFechaInicio());
+            map.put("fechaFin", membresia.getFechaFin());
+            map.put("valorPagado", membresia.getValorPagado());
+            EstadoMembresia estado = oMembresiaService.MTCalcularEstado(membresia);
+            map.put("estadoMembresia", estado != null ? estado.name() : "SIN_MEMBRESIA");
+
+            listaResultado.add(map);
+        }
+        return listaResultado;
+    }
+
     public List<Socio> MtListarSocios() throws Exception {
-         List<Socio> listaSocios = oSocioDao.MtListarSocios();
-         return listaSocios;
+        List<Socio> listaSocios = oSocioDao.MtListarSocios();
+        return listaSocios;
     }
 
     private void MtValidarDatos(Socio s) throws Exception {
@@ -90,7 +110,7 @@ public class SocioService {
         }
 
         if (Validador.esVacio(s.getNombres())) {
-            throw new Exception("El noombre son obligatorios");
+            throw new Exception("El nombre es obligatorios");
         }
         if (!Validador.esNumero(s.getDocumento())) {
             throw new Exception("El documento debe estar constituido unicamente por números");
@@ -103,6 +123,10 @@ public class SocioService {
         if (!Validador.esEmailValido(s.getCorreo())) {
             throw new Exception("El formato del correo electrónico no es válido");
         }
+        if (!Validador.tieneLongitudValida(s.getDocumento(), 9, 11)) {
+            throw new Exception("El documento debe tener una longitud entre 9-11 números");
+        }
+
 
         int edad = Period.between(s.getFechaNacimiento(), LocalDate.now()).getYears();
 
