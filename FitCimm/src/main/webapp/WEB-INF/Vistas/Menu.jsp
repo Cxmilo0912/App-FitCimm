@@ -194,7 +194,7 @@
                 <span>Volver</span>
             </a>
 
-            <a href="${pageContext.request.contextPath}/PlanController?accion=gestion" class="nav-item active">
+            <a href="${pageContext.request.contextPath}/PlanController?accion=gestion" class="nav-item">
                 <span class="material-symbols-outlined">sell</span>
                 <span>Planes</span>
             </a>
@@ -258,6 +258,24 @@
                     }
                 });
             }
+            
+            const currentPath = window.location.pathname;
+            const currentSearch =  window.location.search;
+            const navItems = document.querySelectorAll('.sidebar-nav .nav-item');
+            
+            navItems.forEach(item => {
+                const itemHref = item.getAttribute('href');
+                
+                if (item.classList.contains('nav-item-back')) return;
+                
+                if (itemHref && (currentPath.includes(itemHref) || (currentSearch && itemHref.includes(currentSearch)))) {
+                    
+                    navItems.forEach(nav => nav.classList.remove('active'));
+                    item.classList.add('active');
+                }
+                
+                
+            });
         });
     })();
 </script>

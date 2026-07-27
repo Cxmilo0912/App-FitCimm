@@ -61,6 +61,11 @@ public class MembresiaController extends HttpServlet {
         } else if ("nuevo".equals(action)) {
 
             try {
+                 String success = (String) request.getSession().getAttribute("success");
+                if (success != null) {
+                    request.setAttribute("success", success);
+                    request.getSession().removeAttribute("success"); 
+                }
 
                 List<Socio> listaSocios = oSocio.MtListarSocios();
                 request.setAttribute("socios", listaSocios);
@@ -100,9 +105,9 @@ public class MembresiaController extends HttpServlet {
                 LocalDate fechaInicio = LocalDate.parse(request.getParameter("fechaInicio"));
                 double valorPagado = Double.parseDouble(request.getParameter("valorpagado"));
 
-                oMembresia.MtVender(idSocio, oplan, valorPagado, fechaInicio);
-                request.setAttribute("success", "la membresia se ha registado correctamente");
-                request.getRequestDispatcher("WEB-INF/Vistas/Membresia/CrearMembresia.jsp").forward(request, response);
+                String mensaje = oMembresia.MtVender(idSocio, oplan, valorPagado, fechaInicio);
+                request.getSession().setAttribute("success", mensaje);
+                  response.sendRedirect(request.getContextPath() + "/MembresiaController?accion=nuevo");
                 return;
             } catch (Exception e) {
                 request.getSession().setAttribute("error", e.getMessage());
