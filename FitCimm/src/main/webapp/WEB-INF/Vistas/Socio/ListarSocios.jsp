@@ -664,7 +664,7 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label for="edit_document">Documento del Socio</label>
-                                    <input  id="edit_document" name="partner_document" class="form-control" required>
+                                    <input  id="edit_document" name="partner_document" class="form-control" disabled>
                                 </div>
                                 <div class="form-group">
                                     <label for="edit_names">Nombre del Socio</label>

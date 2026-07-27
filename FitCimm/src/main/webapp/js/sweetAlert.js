@@ -12,7 +12,7 @@ class sweetAlert {
             title: title,
             text: text,
             confirmButtonColor: '#2563eb', // Coincide con tu paleta de colores (Primary)
-            timer: 4000,
+            timer: 8000,
             timerProgressBar: true
         });
     }
