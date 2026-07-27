@@ -75,6 +75,10 @@ public class SocioService {
 
         return listaResultado;
     }
+    public List<Socio> MtListarSocios() throws Exception {
+         List<Socio> listaSocios = oSocioDao.MtListarSocios();
+         return listaSocios;
+    }
 
     private void MtValidarDatos(Socio s) throws Exception {
         if (s == null) {

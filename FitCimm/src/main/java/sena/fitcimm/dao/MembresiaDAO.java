@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import sena.fitcimm.model.Membresia;
+import sena.fitcimm.model.Plan;
 import sena.fitcimm.model.Socio;
 import sena.fitcimm.util.ConexionDB;
 
@@ -23,31 +24,31 @@ public class MembresiaDAO {
             ps.setDate(3, Date.valueOf(oMembresia.getFechaInicio()));
             ps.setDate(4, Date.valueOf(oMembresia.getFechaFin()));
             ps.setDouble(5, oMembresia.getValorPagado());
+            ps.executeUpdate();
 
         }
 
     }
 
-    public List<Socio> MtListarMembresias() throws SQLException {
-        List<Socio> lista = new ArrayList<>();
-        String consulta = "SELECT s.*, m.id_membresia, m.id_plan, m.fecha_inicio, m.fecha_fin, m.valor_pagado "
-            + "FROM socio s "
-            + "INNER JOIN membresia m ON s.id_socio = m.id_socio "
-            + "INNER JOIN ("
-            + "    SELECT id_socio, MAX(fecha_fin) AS max_fin "
-            + "    FROM membresia "
-            + "    GROUP BY id_socio"
-            + ") ultima ON m.id_socio = ultima.id_socio AND m.fecha_fin = ultima.max_fin";
+  public List<Socio> MtListarMembresias() throws SQLException {
+    List<Socio> lista = new ArrayList<>();
+    String consulta = "SELECT s.id_socio,s.documento, s.nombres, s.apellidos, m.fecha_fin, p.nombre "
+        + "FROM socio s "
+        + "INNER JOIN membresia m ON s.id_socio = m.id_socio "
+        + "INNER JOIN plan p ON m.id_plan = p.id_plan "
+        + "INNER JOIN ("
+        + "    SELECT id_socio, MAX(fecha_fin) AS max_fin "
+        + "    FROM membresia "
+        + "    GROUP BY id_socio"
+        + ") ultima ON m.id_socio = ultima.id_socio AND m.fecha_fin = ultima.max_fin";
 
-        try (Connection con = ConexionDB.getConnection(); PreparedStatement ps = con.prepareStatement(consulta); ResultSet rs = ps.executeQuery()) {
-            while (rs.next()) {
-                lista.add(MtMapear(rs));
-            }
-
+    try (Connection con = ConexionDB.getConnection(); PreparedStatement ps = con.prepareStatement(consulta); ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+            lista.add(MtMapear(rs));
         }
-        return lista;
-
     }
+    return lista;
+}
 
     private Socio MtMapear(ResultSet rs) throws SQLException {
 
@@ -57,18 +58,15 @@ public class MembresiaDAO {
         oSocio.setDocumento(rs.getString("documento"));
         oSocio.setNombres(rs.getString("nombres"));
         oSocio.setApellidos(rs.getString("apellidos"));
-        oSocio.setTelefono(rs.getString("telefono"));
-        oSocio.setCorreo(rs.getString("correo"));
-        oSocio.setFechaNacimiento(rs.getObject("fecha_nacimiento", LocalDate.class));
 
         Membresia oMembresia = new Membresia();
-
-        oMembresia.setId(rs.getInt("id_membresia"));
-        oMembresia.setIdSocio(rs.getInt("id_socio"));
-        oMembresia.setIdPlan(rs.getInt("id_plan"));
-        oMembresia.setFechaInicio(rs.getObject("fecha_inicio", LocalDate.class));
+        
         oMembresia.setFechaFin(rs.getObject("fecha_fin", LocalDate.class));
-        oMembresia.setValorPagado(rs.getDouble("valor_pagado"));
+        
+        Plan oplan = new Plan();
+        oplan.setNombre(rs.getString("nombre"));
+        oMembresia.setPlan(oplan);  
+        
         
         oSocio.setMembresia(oMembresia);
 
