@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
-<html class="light" lang="es">
+<html lang="es">
 
     <head>
         <meta charset="utf-8" />
@@ -10,45 +10,255 @@
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com" rel="preconnect" />
         <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
-            rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet" />
         <!-- Material Symbols -->
-        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-              rel="stylesheet" />
-        <!-- Tailwind CSS -->
-        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-        <script id="tailwind-config">
-            tailwind.config = {
-                darkMode: "class",
-                theme: {
-                    extend: {
-                        colors: {
-                            navy: {
-                                800: '#1e293b',
-                                900: '#0f172a',
-                                950: '#0b0f19',
-                            }
-                        },
-                        fontFamily: {
-                            sans: ['Hanken Grotesk', 'sans-serif'],
-                            mono: ['JetBrains Mono', 'monospace'],
-                        }
-                    }
-                }
-            }
-        </script>
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
         <style>
+            :root {
+                --bg-main: #f8fafc;
+                --bg-surface: #ffffff;
+                --text-main: #1e293b;
+                --text-muted: #64748b;
+                --border-color: #e2e8f0;
+                --primary: #0284c7;
+                --primary-hover: #0369a1;
+                --primary-shadow: rgba(2, 132, 199, 0.2);
+                --navy-dark: #0f172a;
+            }
+
+            @media (prefers-color-scheme: dark) {
+                /* Si prefieres controlarlo por clase como dark mode, puedes usar .dark body */
+            }
+
+            .dark-mode, html.dark {
+                --bg-main: #0b0f19;
+                --bg-surface: #0f172a;
+                --text-main: #f1f5f9;
+                --text-muted: #94a3b8;
+                --border-color: #1e293b;
+            }
+
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
             body {
                 font-family: 'Hanken Grotesk', sans-serif;
+                background-color: var(--bg-main);
+                color: var(--text-main);
+                min-height: 100vh;
+                transition: background-color 0.2s, color 0.2s;
             }
 
             .material-symbols-outlined {
                 font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+                vertical-align: middle;
             }
 
+            /* LAYOUT PRINCIPAL */
+            main {
+                padding: 2.5rem;
+                min-height: 100vh;
+                max-width: 1600px;
+                margin: 0 auto;
+            }
+
+            header.page-header {
+                margin-bottom: 1.5rem;
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            @media (min-width: 640px) {
+                header.page-header {
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: flex-end;
+                }
+            }
+
+            header.page-header h1 {
+                font-size: 1.875rem;
+                font-weight: 700;
+                letter-spacing: -0.025em;
+            }
+
+            header.page-header p {
+                font-size: 1rem;
+                color: var(--text-muted);
+                margin-top: 0.25rem;
+            }
+
+            /* SELECTOR DE PESTAÑAS */
+            .report-tabs {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                margin-bottom: 1.5rem;
+                border-bottom: 1px solid var(--border-color);
+                padding-bottom: 1rem;
+            }
+
+            .report-tab {
+                padding: 0.625rem 1rem;
+                border-radius: 0.5rem;
+                font-size: 0.875rem;
+                font-weight: 600;
+                transition: all 0.2s ease;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                cursor: pointer;
+                border: 1px solid var(--border-color);
+                background-color: var(--bg-surface);
+                color: var(--text-muted);
+            }
+
+            .report-tab.active {
+                background-color: var(--primary);
+                color: white;
+                border-color: var(--primary);
+                box-shadow: 0 4px 6px -1px var(--primary-shadow);
+            }
+
+            .report-tab:hover:not(.active) {
+                background-color: var(--border-color);
+                color: var(--text-main);
+            }
+
+            .hidden {
+                display: none !important;
+            }
+
+            .report-content {
+                display: flex;
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            /* TARJETAS Y CONTENEDORES */
+            .card {
+                background-color: var(--bg-surface);
+                border: 1px solid var(--border-color);
+                border-radius: 1rem;
+                box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+                overflow: hidden;
+            }
+
+            .card-header {
+                padding: 1.25rem;
+                border-bottom: 1px solid var(--border-color);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .card-header h2 {
+                font-size: 1.125rem;
+                font-weight: 700;
+            }
+
+            /* TARJETA DESTACADA (PLAN MÁS VENDIDO) */
+            .banner-card {
+                background: linear-gradient(to right, #0284c7, #1d4ed8);
+                color: white;
+                border-radius: 1rem;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+                padding: 1.5rem;
+                display: flex;
+                align-items: center;
+                gap: 1.5rem;
+            }
+
+            .banner-icon {
+                background-color: rgba(255, 255, 255, 0.1);
+                padding: 0.75rem;
+                border-radius: 0.75rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .banner-card span.label {
+                font-size: 0.75rem;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                color: #bae6fd;
+                font-weight: 600;
+                display: block;
+            }
+
+            .banner-card h3 {
+                font-size: 1.5rem;
+                font-weight: 800;
+                letter-spacing: -0.025em;
+                margin-top: 0.125rem;
+            }
+
+            /* FILTRO DE FECHAS */
+            .filter-form {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                background-color: var(--bg-main);
+                padding: 0.5rem;
+                border-radius: 0.75rem;
+                border: 1px solid var(--border-color);
+                font-size: 0.75rem;
+            }
+
+            .filter-group {
+                display: flex;
+                align-items: center;
+                gap: 0.375rem;
+            }
+
+            .filter-group span {
+                color: var(--text-muted);
+                font-weight: 500;
+            }
+
+            .filter-input {
+                background-color: var(--bg-surface);
+                border: 1px solid var(--border-color);
+                border-radius: 0.5rem;
+                padding: 0.25rem 0.5rem;
+                color: var(--text-main);
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.75rem;
+                outline: none;
+            }
+
+            .filter-input:focus {
+                border-color: var(--primary);
+                box-shadow: 0 0 0 1px var(--primary);
+            }
+
+            .filter-btn {
+                background-color: var(--primary);
+                color: white;
+                font-weight: 600;
+                padding: 0.375rem 0.75rem;
+                border-radius: 0.5rem;
+                border: none;
+                cursor: pointer;
+                transition: background-color 0.2s;
+            }
+
+            .filter-btn:hover {
+                background-color: var(--primary-hover);
+            }
+
+            /* TABLAS */
             .custom-scrollbar::-webkit-scrollbar {
                 width: 6px;
+                height: 6px;
             }
 
             .custom-scrollbar::-webkit-scrollbar-track {
@@ -63,14 +273,6 @@
             .dark .custom-scrollbar::-webkit-scrollbar-thumb {
                 background: #334155;
             }
-               /* TABLA DE DATOS */
-            .table-card {
-                background: var(--bg-surface);
-                border-radius: 12px;
-                border: 1px solid #e2e8f0;
-                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-                overflow: hidden;
-            }
 
             .table-responsive {
                 width: 100%;
@@ -81,22 +283,27 @@
                 width: 100%;
                 border-collapse: collapse;
                 text-align: left;
-                font-size: 14px;
+                font-size: 0.875rem;
             }
 
             th {
-                background-color: #0f172a;
+                background-color: var(--navy-dark);
                 color: white;
                 font-family: 'JetBrains Mono', monospace;
-                font-size: 11px;
+                font-size: 0.6875rem;
                 text-transform: uppercase;
                 letter-spacing: 0.05em;
-                padding: 14px 20px;
+                padding: 1rem 1.25rem;
+                border-right: 1px solid #1e293b;
+            }
+
+            th:last-child {
+                border-right: none;
             }
 
             td {
-                padding: 16px 20px;
-                border-bottom: 1px solid #e2e8f0;
+                padding: 1rem 1.25rem;
+                border-bottom: 1px solid var(--border-color);
                 color: var(--text-main);
             }
 
@@ -105,21 +312,21 @@
             }
 
             tr:hover td {
-                background-color: #f8fafc;
+                background-color: rgba(0, 0, 0, 0.01);
             }
 
             .mono {
                 font-family: 'JetBrains Mono', monospace;
                 color: var(--text-muted);
-                font-size: 13px;
+                font-size: 0.8125rem;
             }
 
             /* BADGES */
             .badge {
                 display: inline-flex;
                 align-items: center;
-                padding: 4px 10px;
-                font-size: 11px;
+                padding: 0.25rem 0.625rem;
+                font-size: 0.6875rem;
                 font-weight: 700;
                 border-radius: 9999px;
                 text-transform: uppercase;
@@ -131,55 +338,50 @@
                 color: #166534;
                 border: 1px solid #bbf7d0;
             }
+
+            .text-emerald {
+                color: #059669;
+                font-weight: 700;
+            }
         </style>
     </head>
 
-    <body class="bg-slate-50 dark:bg-navy-950 text-slate-800 dark:text-slate-100 min-h-screen transition-colors duration-200">
+    <body>
 
         <jsp:include page="/WEB-INF/Vistas/Menu.jsp" />
 
-        <main class="p-6 md:p-10 min-h-screen max-w-[1600px] mx-auto">
+        <main>
             <!-- Page Header -->
-            <header class="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
+            <header class="page-header">
                 <div>
-                    <h1 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Panel de Reportes del Sistema</h1>
-                    <p class="text-sm md:text-base text-slate-500 dark:text-slate-400 mt-1">Visualización de datos consolidados para socios, recaudación y analítica de planes.</p>
+                    <h1>Panel de Reportes del Sistema</h1>
+                    <p>Visualización de datos consolidados para socios, recaudación y analítica de planes.</p>
                 </div>
             </header>
 
             <!-- Report Tabs Selector -->
-            <div class="flex flex-wrap gap-2 mb-6 border-b border-slate-200 dark:border-slate-800 pb-4">
+            <div class="report-tabs">
                 <button onclick="switchReport('report1', this)"
-                        class="report-tab px-4 py-2.5 rounded-lg text-sm font-semibold transition-all flex items-center gap-2
-                        ${param.accion == 'reporteplan' 
-                          ? 'bg-white dark:bg-navy-900 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800' 
-                          : 'bg-sky-600 text-white shadow-md shadow-sky-600/20'}">
-                    <span class="material-symbols-outlined text-[18px]">badge</span>
+                        class="report-tab ${param.accion == 'reporteplan' ? '' : 'active'}">
+                    <span class="material-symbols-outlined" style="font-size: 18px;">badge</span>
                     Socios Activos (Vigentes)
                 </button>
 
                 <button onclick="switchReport('report2', this)"
-                        class="report-tab px-4 py-2.5 rounded-lg text-sm font-semibold transition-all flex items-center gap-2
-                        ${param.accion == 'reporteplan' 
-                          ? 'bg-sky-600 text-white shadow-md shadow-sky-600/20' 
-                          : 'bg-white dark:bg-navy-900 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800'}">
-                    <span class="material-symbols-outlined text-[18px]">payments</span>
+                        class="report-tab ${param.accion == 'reporteplan' ? 'active' : ''}">
+                    <span class="material-symbols-outlined" style="font-size: 18px;">payments</span>
                     Reporte Planes
                 </button>
-
             </div>
 
-
-            <div id="report1" class="report-content space-y-6 ${param.accion == 'reportePlan' ? 'hidden' : ''}">
-                <div class="bg-white dark:bg-navy-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden">
-                    <div class="p-5 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
-                        <div>
-                            <h2 class="text-lg font-bold text-slate-900 dark:text-white">Reporte de socios activos con membresía vigente</h2>
-                        </div>
-                      
+            <!-- Reporte 1 -->
+            <div id="report1" class="report-content ${param.accion == 'reportePlan' ? 'hidden' : ''}">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Reporte de socios activos con membresía vigente</h2>
                     </div>
-                    <div class="overflow-x-auto custom-scrollbar">
-                        <table id="tablaMembresias" class="w-full text-left border-collapse">
+                    <div class="table-responsive custom-scrollbar">
+                        <table>
                             <thead>
                                 <tr>
                                     <th>Documento Socio</th>
@@ -187,7 +389,6 @@
                                     <th>Plan Asignado</th>
                                     <th>Válido Hasta</th>
                                     <th>Estado</th>
-                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -199,109 +400,87 @@
                                             <td>Plan ${m.plan}</td>
                                             <td class="mono">${m.fechaFin}</td>
                                             <td>
-
                                                 <span class="badge badge-vigente">Vigente</span>
-
-
-
                                             </td>
-
                                         </tr>
                                     </c:if>
                                 </c:forEach>
                             </tbody>
                         </table>
-
-
                     </div>
                 </div>
             </div>
 
-
-            <div id="report2" class="report-content space-y-6 ${param.accion == 'reportePlan' ? '' : 'hidden'}">
+            <!-- Reporte 2 -->
+            <div id="report2" class="report-content ${param.accion == 'reportePlan' ? '' : 'hidden'}">
                 <!-- Tarjeta: Plan Más Vendido del Mes -->
-                <div class="bg-gradient-to-r from-sky-600 to-blue-700 text-white rounded-2xl shadow-md p-6 flex items-center justify-between gap-6">
-                    <div class="flex items-center gap-4">
-                        <div class="bg-white/10 p-3 rounded-xl">
-                            <span class="material-symbols-outlined text-[28px]">trending_up</span>
-                        </div>
-                        <div>
-                            <span class="text-xs uppercase tracking-wider text-sky-200 font-semibold">Plan más vendido del mes</span>
-                            <h3 class="text-xl sm:text-2xl font-extrabold tracking-tight">Plan ${masVendido}</h3>
-                        </div>
+                <div class="banner-card">
+                    <div class="banner-icon">
+                        <span class="material-symbols-outlined" style="font-size: 28px;">trending_up</span>
                     </div>
-
+                    <div>
+                        <span class="label">Plan más vendido del mes</span>
+                        <h3>Plan ${masVendido}</h3>
+                    </div>
                 </div>
-                <div class="bg-white dark:bg-navy-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm overflow-hidden">
-                    <div class="p-5 border-b border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                        <div>
-                            <h2 class="text-lg font-bold text-slate-900 dark:text-white">Reporte del total recaudado en un rango de fechas, agrupado por plan</h2>
 
-                        </div>
+                <div class="card">
+                    <div class="card-header" style="flex-direction: row; justify-content: space-between; align-items: center;">
+                        <h2>Reporte del total recaudado en un rango de fechas, agrupado por plan</h2>
 
-                        <form action="${pageContext.request.contextPath}/PlanController" method="GET" class="flex items-center gap-2 bg-slate-50 dark:bg-navy-950 p-2 rounded-xl border border-slate-200 dark:border-slate-800 text-xs">
+                        <form action="${pageContext.request.contextPath}/PlanController" method="GET" class="filter-form">
                             <input type="hidden" name="accion" value="reportePlan">
-                            <div class="flex items-center gap-1.5">
-                                <span class="text-slate-400 font-medium">Desde:</span>
-                                <input type="date" name="fechaInicio" value="" class="bg-white dark:bg-navy-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1echaInici text-slate-700 dark:text-slate-200 font-mono focus:outline-none focus:ring-1 focus:ring-sky-500">
+                            <div class="filter-group">
+                                <span>Desde:</span>
+                                <input type="date" name="fechaInicio" value="" class="filter-input">
                             </div>
-                            <div class="flex items-center gap-1.5">
-                                <span class="text-slate-400 font-medium">Hasta:</span>
-                                <input type="date" name="fechaFin" value="" class="bg-white dark:bg-navy-900 border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 text-slate-700 dark:text-slate-200 font-mono focus:outline-none focus:ring-1 focus:ring-sky-500">
+                            <div class="filter-group">
+                                <span>Hasta:</span>
+                                <input type="date" name="fechaFin" value="" class="filter-input">
                             </div>
-                            <button type="submit" class="bg-sky-600 hover:bg-sky-500 text-white font-semibold px-3 py-1.5 rounded-lg transition-all shadow-sm">
+                            <button type="submit" class="filter-btn">
                                 Filtrar
                             </button>
                         </form>
                     </div>
-                    <div class="overflow-x-auto custom-scrollbar">
-                        <table class="w-full text-left border-collapse">
-                            <thead>
-                                <tr class="bg-navy-900 dark:bg-navy-950 text-slate-200 border-b border-slate-800">
-                                    <th class="px-6 py-4 text-xs font-semibold font-mono tracking-wider uppercase border-r border-slate-800">PLAN COMERCIAL</th>
 
-                                    <th class="px-6 py-4 text-xs font-semibold font-mono tracking-wider uppercase border-r border-slate-800">VALOR UNITARIO</th>
-                                    <th class="px-6 py-4 text-xs font-semibold font-mono tracking-wider uppercase">RECAUDACIÓN TOTAL</th>
+                    <div class="table-responsive custom-scrollbar">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>PLAN COMERCIAL</th>
+                                    <th>VALOR UNITARIO</th>
+                                    <th>RECAUDACIÓN TOTAL</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-sm">
+                            <tbody>
                                 <c:forEach var="p" items="${total}">
-                                    <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                                        <td class="px-6 py-4 font-semibold text-slate-900 dark:text-white">Plan ${p.nombrePlan}</td>
-                                        <td class="px-6 py-4 font-mono text-slate-500 dark:text-slate-400">$ ${p.valorUnitario}</td>
-                                        <td class="px-6 py-4 font-mono font-bold text-emerald-600 dark:text-emerald-400">$ ${p.recaudacionTotal}</td>
+                                    <tr>
+                                        <td style="font-weight: 600;">Plan ${p.nombrePlan}</td>
+                                        <td class="mono">$ ${p.valorUnitario}</td>
+                                        <td class="mono text-emerald">$ ${p.recaudacionTotal}</td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
                         </table>
                     </div>
-
                 </div>
-
             </div>
-
-
         </main>
 
         <script>
-            // Funcionalidad para alternar entre las pestañas de reportes
             function switchReport(reportId, buttonElement) {
-                // Ocultar todos los reportes
                 document.querySelectorAll('.report-content').forEach(el => {
                     el.classList.add('hidden');
                 });
-                // Mostrar el seleccionado
                 document.getElementById(reportId).classList.remove('hidden');
 
-                // Resetear estilos de las pestañas
                 document.querySelectorAll('.report-tab').forEach(btn => {
-                    btn.className = "report-tab px-4 py-2.5 rounded-lg text-sm font-semibold transition-all bg-white dark:bg-navy-900 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-2";
+                    btn.classList.remove('active');
                 });
 
-                // Activar pestaña actual
-                buttonElement.className = "report-tab px-4 py-2.5 rounded-lg text-sm font-semibold transition-all bg-sky-600 text-white shadow-md shadow-sky-600/20 flex items-center gap-2";
+                buttonElement.classList.add('active');
             }
         </script>
     </body>
-
 </html>

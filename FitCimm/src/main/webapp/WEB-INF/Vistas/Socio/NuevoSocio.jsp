@@ -421,7 +421,7 @@
                         <!-- Teléfono -->
                         <div class="field-group">
                             <label class="input-label" for="telefono">Teléfono</label>
-                            <input class="input-control" id="telefono" name="telefono" placeholder="+54 9 11 0000-0000" type="tel" />
+                            <input class="input-control" id="telefono" name="telefono" placeholder="3209878967" type="tel" />
                         </div>
 
                         <!-- Correo -->
