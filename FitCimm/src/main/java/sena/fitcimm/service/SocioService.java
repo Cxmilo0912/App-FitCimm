@@ -41,7 +41,27 @@ public class SocioService {
             throw new Exception("Identificador del socio no válido para actualizar su informacion.");
         }
 
-        MtValidarDatos(s);
+        if (s == null) {
+            throw new Exception("Los datos del socio son obligatorios.");
+        }
+
+        if (Validador.esVacio(s.getNombres())) {
+            throw new Exception("El nombre es obligatorio");
+        }
+        
+        if (!Validador.esNumero(s.getTelefono())) {
+            throw new Exception("El telefono debe estar constituido unicamente por números");
+        }
+
+        if (!Validador.esEmailValido(s.getCorreo())) {
+            throw new Exception("El formato del correo electrónico no es válido");
+        }
+
+        int edad = Period.between(s.getFechaNacimiento(), LocalDate.now()).getYears();
+
+        if (edad < 15) {
+            throw new Exception("El socio debe ser mayor de 15 años");
+        }
 
         oSocioDao.MtEditarSocio(s);
     }
@@ -110,7 +130,7 @@ public class SocioService {
         }
 
         if (Validador.esVacio(s.getNombres())) {
-            throw new Exception("El nombre es obligatorios");
+            throw new Exception("El nombre es obligatorio");
         }
         if (!Validador.esNumero(s.getDocumento())) {
             throw new Exception("El documento debe estar constituido unicamente por números");
