@@ -86,7 +86,6 @@ public class SocioController extends HttpServlet {
                 oSocio.setId(Integer.parseInt(req.getParameter("id")));
                 oSocio.setNombres(req.getParameter("partner_names"));
                 oSocio.setApellidos(req.getParameter("partner_lastnames"));
-                oSocio.setDocumento(req.getParameter("partner_document"));
                 oSocio.setTelefono(req.getParameter("partner_cellnumber"));
                 oSocio.setCorreo(req.getParameter("partner_email"));
                 String fechaStr = req.getParameter("partner_date");

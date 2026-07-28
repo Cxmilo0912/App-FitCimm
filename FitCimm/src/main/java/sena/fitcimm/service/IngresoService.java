@@ -50,7 +50,7 @@ public class IngresoService {
 
         //Verificar Socio activo
         if (oSocio.isActivo() == false) {
-            throw new Exception("El socio no puede ingresar debido a que se encuentra inactivo");
+            throw new Exception("El socio:" + oSocio.getNombres() + " no puede ingresar debido a que se encuentra inactivo");
         }
 
         //Verificar Membresia vencida

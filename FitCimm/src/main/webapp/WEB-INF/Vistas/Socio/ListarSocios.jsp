@@ -668,23 +668,23 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="edit_names">Nombre del Socio</label>
-                                    <input  id="edit_names" name="partner_names" class="form-control" required>
+                                    <input  id="edit_names" name="partner_names" class="form-control" >
                                 </div>
                                 <div class="form-group">
                                     <label for="edit_lastnames">Apellidos del Socio</label>
-                                    <input  id="edit_lastnames" name="partner_lastnames" class="form-control" required>
+                                    <input  id="edit_lastnames" name="partner_lastnames" class="form-control" >
                                 </div>
                                 <div class="form-group">
                                     <label for="edit_lastnames">Fecha de Nacimiento del Socio</label>
-                                    <input type="date" id="edit_date" name="partner_date" class="form-control" required>
+                                    <input type="date" id="edit_date" name="partner_date" class="form-control" >
                                 </div>
                                 <div class="form-group">
                                     <label for="edit_cellnumber">Teléfono del Socio</label>
-                                    <input  id="edit_cellnumber" name="partner_cellnumber" class="form-control" required>
+                                    <input  id="edit_cellnumber" name="partner_cellnumber" class="form-control" >
                                 </div>
                                 <div class="form-group">
                                     <label for="edit_email">Email del Socio</label>
-                                    <input  id="edit_email" name="partner_email" class="form-control" required>
+                                    <input  id="edit_email" name="partner_email" class="form-control" >
                                 </div>
                             </div>
 
@@ -838,6 +838,53 @@
                 });
             </script>
         </c:if>
+
+
+        <%
+            String error = (String) request.getAttribute("error");
+            if (error != null && !error.isEmpty()) {
+        %>
+        <script>
+            window.addEventListener('DOMContentLoaded', () => {
+                sweetAlert.error("¡Error!", "<%= error%>");
+            });
+        </script>
+        <%} else {%>
+        <script>
+            window.addEventListener('DOMContentLoaded', () => {
+                const url = new URLSearchParams(window.location.search);
+                if (url.get('exito') === 'trueupdate') {
+                    Swal.fire({
+                        title: '¡Actualizado con éxito!',
+                        text: 'Los datos del socio se actualizaron correctamente.',
+                        icon: 'success',
+                        timer: 2000,
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                    });
+                } else if (url.get('exito') === 'trueactivate') {
+                    Swal.fire({
+                        title: '¡Realizado con éxito!',
+                        text: 'El socio ha sido activado',
+                        icon: 'success',
+                        timer: 2000,
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                    });
+
+                } else if (url.get('exito') === 'trueinactivate') {
+                    Swal.fire({
+                        title: '¡Realizado con éxito!',
+                        text: 'El socio ha sido inactivado.',
+                        icon: 'success',
+                        timer: 2000,
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                    });
+                }
+            });
+        </script>
+        <%}%>
 
     </body>
 </html>
