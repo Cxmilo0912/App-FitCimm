@@ -62,11 +62,6 @@ public class MembresiaController extends HttpServlet {
 
             try {
                  String success = (String) request.getSession().getAttribute("success");
-                if (success != null) {
-                    request.setAttribute("success", success);
-                    request.getSession().removeAttribute("success"); 
-                }
-
                 List<Socio> listaSocios = oSocio.MtListarSocios();
                 request.setAttribute("socios", listaSocios);
                 List<Plan> listaPlanes = oPlan.MtListarPlanes();
@@ -75,6 +70,11 @@ public class MembresiaController extends HttpServlet {
                 if (error != null) {
                     request.setAttribute("error", error);
                     request.getSession().removeAttribute("error");
+                }
+                 
+                if (success != null) {
+                    request.setAttribute("success", success);
+                    request.getSession().removeAttribute("success"); 
                 }
 
             } catch (Exception e) {
