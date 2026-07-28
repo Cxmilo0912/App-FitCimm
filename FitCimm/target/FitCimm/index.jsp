@@ -14,7 +14,6 @@
         <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 
         <!-- Archivos locales con sintaxis JSP correcta ($) -->
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/theme.css">
         <script src="${pageContext.request.contextPath}/js/theme.js"></script>
 
         <script id="tailwind-config">

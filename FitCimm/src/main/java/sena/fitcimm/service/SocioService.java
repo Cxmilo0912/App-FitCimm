@@ -143,8 +143,8 @@ public class SocioService {
         if (!Validador.esEmailValido(s.getCorreo())) {
             throw new Exception("El formato del correo electrónico no es válido");
         }
-        if (!Validador.tieneLongitudValida(s.getDocumento(), 9, 11)) {
-            throw new Exception("El documento debe tener una longitud entre 9-11 números");
+        if (!Validador.tieneLongitudValida(s.getDocumento(), 8, 11)) {
+            throw new Exception("El documento debe tener una longitud entre 8-11 números");
         }
 
 
